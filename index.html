@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japanese Learning Hub | Pro Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --emerald: #059669; --rose: #e11d48; --slate: #1e293b; --indigo: #4f46e5; }
+        body { font-family: 'Quicksand', 'Noto Sans JP', sans-serif; background-color: #f8fafc; color: var(--slate); }
+        .perspective-1000 { perspective: 1000px; }
+        .flip-card-inner { transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; }
+        .flip-card-flipped { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { backface-visibility: hidden; border-radius: 2.5rem; }
+        .flip-card-back { transform: rotateY(180deg); }
+        .view-animate { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        .scroll-hide::-webkit-scrollbar { display: none; }
+        .mastery-bar { transition: height 1s ease-out; }
+        
+        .glass-panel { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(8px); }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <!-- MAIN HUB -->
+    <div id="app-root" class="w-full max-w-md bg-white rounded-[3rem] shadow-2xl overflow-hidden min-h-[750px] flex flex-col relative border-4 border-white">
+        
+        <!-- TOP STATUS BAR -->
+        <div class="px-8 pt-6 flex justify-between items-center z-10">
+            <div id="streak-badge" class="flex gap-2">
+                <span id="streak-count" class="text-[10px] font-bold bg-amber-100 text-amber-600 px-3 py-1 rounded-full uppercase tracking-tighter shadow-sm">🔥 0 Day Streak</span>
+            </div>
+            <div class="flex gap-2">
+                <span id="script-badge" class="text-[10px] font-bold bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full uppercase tracking-tighter shadow-sm">HIRAGANA</span>
+            </div>
+        </div>
+
+        <!-- 1. HUB MENU -->
+        <div id="view-menu" class="view-animate flex flex-col p-8 h-full pt-4">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4 rotate-3 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                </div>
+                <h1 class="text-3xl font-bold tracking-tight text-slate-800">Learn Japanese</h1>
+                <p class="text-slate-400 text-sm font-medium">No word left behind</p>
+            </div>
+
+            <div class="space-y-3 flex-1 overflow-y-auto scroll-hide pb-4">
+                <!-- Filters & Controls -->
+                <div class="bg-slate-50 p-4 rounded-3xl border border-slate-100 space-y-4">
+                    <div class="flex justify-between items-center px-1">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase">Script & Category</span>
+                        <div class="flex bg-slate-200 p-0.5 rounded-lg">
+                            <button onclick="setFilter('h')" id="f-h" class="px-3 py-1 text-[10px] font-bold rounded-md transition-all bg-white text-emerald-600 shadow-sm">HIR</button>
+                            <button onclick="setFilter('k')" id="f-k" class="px-3 py-1 text-[10px] font-bold rounded-md transition-all text-slate-500">KAT</button>
+                            <button onclick="setFilter('both')" id="f-both" class="px-3 py-1 text-[10px] font-bold rounded-md transition-all text-slate-500">BOTH</button>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-2">
+                        <select id="cat-select" class="text-[10px] font-bold bg-white border border-slate-200 rounded-xl px-3 py-2 outline-none shadow-sm cursor-pointer">
+                            <option value="all">All Categories</option>
+                            <option value="nature">Nature</option>
+                            <option value="food">Food</option>
+                            <option value="travel">Travel</option>
+                            <option value="objects">Objects</option>
+                        </select>
+                        <select id="size-select" class="text-[10px] font-bold bg-white border border-slate-200 rounded-xl px-3 py-2 outline-none shadow-sm cursor-pointer">
+                            <option value="10">10 Cards</option>
+                            <option value="20" selected>20 Cards</option>
+                            <option value="30">30 Cards</option>
+                            <option value="50">50 Cards</option>
+                        </select>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-white/50 p-2 rounded-2xl border border-slate-100">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase ml-2">Listening Challenge</span>
+                        <button id="btn-listening" onclick="toggleListeningMode()" class="text-[9px] bg-slate-100 border border-slate-200 px-3 py-1 rounded-full font-bold text-slate-400 transition-all uppercase tracking-widest">OFF</button>
+                    </div>
+                </div>
+
+                <button onclick="startGame('normal')" class="w-full bg-emerald-600 text-white font-bold py-5 rounded-[2rem] shadow-xl shadow-emerald-100 hover:bg-emerald-700 transition-all active:scale-95 flex items-center justify-center gap-3">
+                    Start Daily Lesson
+                </button>
+
+                <button onclick="startGame('smart')" id="btn-smart-review" class="w-full bg-rose-50 text-rose-600 border border-rose-100 font-bold py-4 rounded-[2.2rem] hover:bg-rose-100 transition-all active:scale-95 flex items-center justify-center gap-3 group">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:rotate-12 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                    Review Weak Words
+                </button>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="changeView('library')" class="bg-white border-2 border-slate-100 text-slate-600 font-bold py-4 rounded-[2rem] hover:border-emerald-200 transition-all flex items-center justify-center gap-2">Library</button>
+                    <button onclick="changeView('history')" class="bg-white border-2 border-slate-100 text-slate-600 font-bold py-4 rounded-[2rem] hover:border-emerald-200 transition-all flex items-center justify-center gap-2">Progress</button>
+                </div>
+
+                <button onclick="changeView('import')" class="w-full bg-slate-800 text-white font-bold py-4 rounded-[2rem] hover:bg-slate-900 transition-all active:scale-95 flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                    Add Custom Words
+                </button>
+            </div>
+            
+            <div class="mt-4 flex items-center justify-between bg-slate-50 p-4 rounded-3xl border border-slate-100">
+                <button id="btn-speed" onclick="toggleSpeed()" class="text-[9px] bg-white border border-slate-200 px-3 py-1.5 rounded-full font-bold text-slate-600 shadow-sm uppercase tracking-widest">Normal Speed</button>
+                <button id="btn-audio" onclick="toggleAudio()" class="text-[9px] bg-emerald-100 border border-emerald-200 px-3 py-1.5 rounded-full font-bold text-emerald-600 shadow-sm uppercase tracking-widest">Audio: ON</button>
+                <button onclick="changeView('db')" class="text-[9px] bg-indigo-50 border border-indigo-100 px-3 py-1.5 rounded-full font-bold text-indigo-600 shadow-sm uppercase tracking-widest">Settings</button>
+            </div>
+
+            <div class="mt-4 flex justify-center gap-6 text-slate-400 font-bold text-[10px] uppercase tracking-widest">
+                <span id="stat-words">0 Words</span>
+                <span id="stat-mastery">0% Mastered</span>
+            </div>
+        </div>
+
+        <!-- 2. GAME VIEW -->
+        <div id="view-game" class="hidden view-animate flex flex-col h-full bg-slate-50 relative">
+            <div class="bg-emerald-600 p-6 text-white flex justify-between items-center">
+                <div class="flex flex-col">
+                    <h3 id="game-mode-label" class="font-bold text-xs uppercase tracking-widest opacity-80">DAILY LESSON</h3>
+                    <span id="game-round" class="text-sm font-bold">Word 1 of 15</span>
+                </div>
+                <button onclick="showQuitModal()" class="p-2 bg-white/10 rounded-xl hover:bg-white/20"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
+            </div>
+
+            <div class="p-8 flex-1 flex flex-col items-center">
+                <div class="w-full bg-slate-200 h-1.5 rounded-full mb-8 overflow-hidden shadow-inner">
+                    <div id="game-progress" class="bg-emerald-500 h-full w-0 transition-all duration-300"></div>
+                </div>
+
+                <div class="perspective-1000 w-full aspect-[4/5] mb-10">
+                    <div id="card" onclick="flipCard()" class="flip-card-inner w-full h-full relative cursor-pointer shadow-2xl rounded-[3rem]">
+                        <div class="flip-card-front absolute inset-0 bg-white flex flex-col items-center justify-center p-8 border-4 border-emerald-50 shadow-inner">
+                            <span id="card-cat-tag" class="absolute top-8 text-[9px] font-bold bg-slate-100 text-slate-400 px-3 py-1 rounded-full uppercase tracking-widest">CATEGORY</span>
+                            <div id="card-front-content" class="flex flex-col items-center">
+                                <h2 id="card-ja" class="text-7xl font-bold text-slate-800">...</h2>
+                                <div id="card-listening-icon" class="hidden text-emerald-400 animate-bounce">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
+                                </div>
+                            </div>
+                            <p class="mt-12 text-slate-300 text-xs font-medium uppercase tracking-widest">Click to Flip</p>
+                        </div>
+                        <div class="flip-card-back absolute inset-0 bg-emerald-600 flex flex-col items-center justify-center p-8 text-white border-4 border-emerald-500">
+                            <h2 id="card-en" class="text-4xl font-bold mb-2">...</h2>
+                            <p id="card-ro" class="text-xl opacity-70 italic font-medium mb-8">...</p>
+                            <button onclick="speakCurrent(event)" class="p-4 bg-white/20 rounded-full hover:bg-white/30 active:scale-90 transition-all">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="game-controls" class="w-full flex gap-4 opacity-0 pointer-events-none transition-all duration-300">
+                    <button onclick="handleResult(false)" class="flex-1 bg-white border-2 border-rose-100 text-rose-500 font-bold py-5 rounded-[2.2rem] shadow-sm active:scale-95 transition-all">WRONG</button>
+                    <button onclick="handleResult(true)" class="flex-1 bg-emerald-600 text-white font-bold py-5 rounded-[2.2rem] shadow-lg active:scale-95 transition-all">CORRECT</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. PROGRESS & ANALYTICS VIEW -->
+        <div id="view-history" class="hidden view-animate flex flex-col h-full bg-white">
+            <div class="p-8 border-b flex justify-between items-center">
+                <h2 class="text-2xl font-bold text-slate-800">Progress</h2>
+                <button onclick="changeView('menu')" class="p-2 bg-slate-50 rounded-xl"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
+            </div>
+            
+            <div class="flex-1 overflow-y-auto p-8 scroll-hide space-y-8">
+                <div>
+                    <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-6">Mastery Distribution</h4>
+                    <div id="analytics-chart" class="flex items-end justify-between h-32 gap-2 px-2"></div>
+                    <div class="flex justify-between mt-2 text-[8px] font-bold text-slate-300 uppercase px-2">
+                        <span>New</span><span>Lv 1</span><span>Lv 2</span><span>Lv 3</span><span>Lv 4</span><span>Star</span>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Recent Sessions</h4>
+                    <div id="history-list" class="space-y-3"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. LIBRARY VIEW -->
+        <div id="view-library" class="hidden view-animate flex flex-col h-full bg-slate-50">
+            <div class="p-6 border-b bg-white flex flex-col gap-4">
+                <div class="flex justify-between items-center">
+                    <div><h2 class="text-2xl font-bold">Library</h2><p id="lib-count" class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">0 Words Found</p></div>
+                    <button onclick="changeView('menu')" class="p-2 bg-slate-50 rounded-xl"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
+                </div>
+                <input type="text" id="lib-search" oninput="renderLibrary()" placeholder="Search Japanese or English..." class="w-full bg-slate-100 border border-slate-200 rounded-2xl py-3 px-4 text-xs font-medium focus:outline-none focus:border-emerald-400 transition-colors">
+            </div>
+            <div id="lib-grid" class="flex-1 overflow-y-auto p-6 grid grid-cols-2 gap-4 scroll-hide"></div>
+        </div>
+
+        <!-- 5. IMPORT VIEW -->
+        <div id="view-import" class="hidden view-animate flex flex-col h-full bg-white">
+            <div class="p-8 border-b flex justify-between items-center"><h2 class="text-2xl font-bold">Add Words</h2><button onclick="changeView('menu')" class="p-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button></div>
+            <div class="p-8 space-y-4 overflow-y-auto">
+                <textarea id="import-text" class="w-full h-40 bg-slate-50 border rounded-3xl p-5 text-xs font-mono" placeholder="ja, en, ro, type (h/k), category"></textarea>
+                <button onclick="processImport()" class="w-full bg-emerald-600 text-white font-bold py-4 rounded-2xl shadow-lg active:scale-95">Import Words</button>
+                <div id="import-status" class="hidden p-3 rounded-2xl text-[10px] font-bold text-center"></div>
+            </div>
+        </div>
+
+        <!-- 6. SETTINGS VIEW (Now with Import) -->
+        <div id="view-db" class="hidden view-animate flex flex-col h-full bg-slate-50">
+            <div class="p-8 flex justify-between items-center"><h2 class="text-2xl font-bold text-slate-800">Settings</h2><button onclick="changeView('menu')" class="p-2 bg-white rounded-xl shadow-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button></div>
+            <div class="px-8 space-y-6 flex-1 overflow-y-auto scroll-hide">
+                <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100">
+                    <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Native Voice Selection</h4>
+                    <select id="voice-select" onchange="saveVoicePreference()" class="w-full text-xs font-bold bg-slate-50 border border-slate-200 rounded-xl px-3 py-3 outline-none shadow-inner cursor-pointer"></select>
+                </div>
+                
+                <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100">
+                    <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Data Management</h4>
+                    <div class="grid grid-cols-1 gap-3">
+                        <button onclick="exportJSON()" class="w-full bg-emerald-600 text-white font-bold py-4 rounded-2xl shadow-sm hover:bg-emerald-700 transition-all text-xs flex items-center justify-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                            Export Database.json
+                        </button>
+                        
+                        <input type="file" id="db-import-input" class="hidden" accept=".json" onchange="importJSON(event)">
+                        <button onclick="document.getElementById('db-import-input').click()" class="w-full bg-indigo-50 text-indigo-600 border border-indigo-100 font-bold py-4 rounded-2xl hover:bg-indigo-100 transition-all text-xs flex items-center justify-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L4 8m4-4v12" /></svg>
+                            Import Database.json
+                        </button>
+
+                        <button onclick="clearDatabase()" class="w-full bg-rose-50 text-rose-500 font-bold py-4 rounded-2xl hover:bg-rose-100 transition-all text-xs mt-2">Clear All Data</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- QUIT MODAL -->
+        <div id="quit-modal" class="hidden absolute inset-0 z-[60] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-8 text-center">
+            <div class="bg-white rounded-[2.5rem] p-8 w-full scale-in shadow-2xl">
+                <h3 class="text-2xl font-bold mb-2">Quit Session?</h3>
+                <div class="flex flex-col gap-3 mt-8">
+                    <button onclick="quitGameNow()" class="w-full bg-rose-50 text-white font-bold py-4 rounded-2xl hover:bg-rose-600 transition-all">Yes, Quit</button>
+                    <button onclick="hideQuitModal()" class="w-full bg-slate-100 text-slate-600 font-bold py-4 rounded-2xl hover:bg-slate-200 transition-all">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const FACTORY_DATA = [
+            { ja: "やま", en: "Mountain", ro: "yama", type: "h", cat: "nature" },
+            { ja: "うみ", en: "Sea", ro: "umi", type: "h", cat: "nature" },
+            { ja: "そら", en: "Sky", ro: "sora", type: "h", cat: "nature" },
+            { ja: "かわ", en: "River", ro: "kawa", type: "h", cat: "nature" },
+            { ja: "き", en: "Tree", ro: "ki", type: "h", cat: "nature" },
+            { ja: "はな", en: "Flower", ro: "ha-na", type: "h", cat: "nature" },
+            { ja: "ゆき", en: "Snow", ro: "yu-ki", type: "h", cat: "nature" },
+            { ja: "みず", en: "Water", ro: "mi-zu", type: "h", cat: "nature" },
+            { ja: "すし", en: "Sushi", ro: "su-shi", type: "h", cat: "food" },
+            { ja: "おちゃ", en: "Tea", ro: "o-cha", type: "h", cat: "food" },
+            { ja: "ごはん", en: "Meal / Rice", ro: "go-han", type: "h", cat: "food" },
+            { ja: "たまご", en: "Egg", ro: "ta-ma-go", type: "h", cat: "food" },
+            { ja: "ケーキ", en: "Cake", ro: "kee-ki", type: "k", cat: "food" },
+            { ja: "コーヒー", en: "Coffee", ro: "koo-hii", type: "k", cat: "food" },
+            { ja: "パン", en: "Bread", ro: "pan", type: "k", cat: "food" },
+            { ja: "ピザ", en: "Pizza", ro: "pi-za", type: "k", cat: "food" },
+            { ja: "かさ", en: "Umbrella", ro: "ka-sa", type: "h", cat: "objects" },
+            { ja: "カメラ", en: "Camera", ro: "ka-me-ra", type: "k", cat: "objects" },
+            { ja: "ホテル", en: "Hotel", ro: "ho-te-ru", type: "k", cat: "travel" },
+            { ja: "えき", en: "Station", ro: "e-ki", type: "h", cat: "travel" },
+            { ja: "くるま", en: "Car", ro: "ku-ru-ma", type: "h", cat: "travel" },
+            { ja: "タクシー", en: "Taxi", ro: "ta-ku-shii", type: "k", cat: "travel" }
+        ];
+
+        let state = { filter: 'h', currentDeck: [], index: 0, stats: { c: 0, f: 0 }, misses: {}, flipped: false, busy: false, round: 1, mode: 'normal' };
+        let settings = { audio: true, speed: 0.9, listening: false, selectedVoice: null };
+
+        function getDatabase() {
+            try {
+                return {
+                    mastery: JSON.parse(localStorage.getItem('jp_mastery') || '{}'),
+                    history: JSON.parse(localStorage.getItem('jp_history') || '[]'),
+                    custom: JSON.parse(localStorage.getItem('jp_custom') || '[]'),
+                    streak: parseInt(localStorage.getItem('jp_streak') || '0'),
+                    lastDate: localStorage.getItem('jp_last_date') || '',
+                    settings: JSON.parse(localStorage.getItem('jp_settings') || '{"audio": true, "speed": 0.9, "listening": false}')
+                };
+            } catch (e) { return { mastery: {}, history: [], custom: [], streak: 0, lastDate: '', settings: { audio: true, speed: 0.9, listening: false } }; }
+        }
+
+        function saveDatabase(data) {
+            localStorage.setItem('jp_mastery', JSON.stringify(data.mastery || {}));
+            localStorage.setItem('jp_history', JSON.stringify(data.history || []));
+            localStorage.setItem('jp_custom', JSON.stringify(data.custom || []));
+            localStorage.setItem('jp_streak', (data.streak || 0).toString());
+            localStorage.setItem('jp_last_date', data.lastDate || '');
+            localStorage.setItem('jp_settings', JSON.stringify(data.settings || settings));
+            updateHubStats();
+        }
+
+        function updateHubStats() {
+            const db = getDatabase();
+            const total = FACTORY_DATA.length + db.custom.length;
+            const elWords = document.getElementById('stat-words');
+            if (elWords) elWords.innerText = `${total} Words`;
+            const masteries = Object.values(db.mastery).filter(m => m.lvl >= 5).length;
+            const elMastery = document.getElementById('stat-mastery');
+            if (elMastery) elMastery.innerText = `${Math.round((masteries / total) * 100) || 0}% Mastered`;
+            const elStreak = document.getElementById('streak-count');
+            if (elStreak) elStreak.innerText = `🔥 ${db.streak} Day Streak`;
+            const btnAudio = document.getElementById('btn-audio');
+            if (btnAudio) {
+                btnAudio.innerText = settings.audio ? 'Audio: ON' : 'Audio: OFF';
+                btnAudio.className = `text-[9px] border px-3 py-1.5 rounded-full font-bold shadow-sm uppercase tracking-widest ${settings.audio ? 'bg-emerald-100 text-emerald-600 border-emerald-200' : 'bg-slate-100 text-slate-400 border-slate-200'}`;
+            }
+            const btnSpeed = document.getElementById('btn-speed');
+            if (btnSpeed) btnSpeed.innerText = settings.speed === 0.9 ? 'Normal Speed' : 'Slow Speed';
+            const btnListen = document.getElementById('btn-listening');
+            if (btnListen) {
+                btnListen.innerText = settings.listening ? 'ON' : 'OFF';
+                btnListen.className = `text-[9px] border px-3 py-1 rounded-full font-bold uppercase tracking-widest ${settings.listening ? 'bg-indigo-100 text-indigo-600 border-indigo-200' : 'bg-slate-100 text-slate-400 border-slate-200'}`;
+            }
+            const badge = document.getElementById('script-badge');
+            if (badge) badge.innerText = state.filter.toUpperCase();
+        }
+
+        function changeView(v) {
+            document.querySelectorAll('.view-animate').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById(`view-${v}`);
+            if (target) target.classList.remove('hidden');
+            if(v === 'library') renderLibrary();
+            if(v === 'history') renderAnalytics();
+            if(v === 'menu') updateHubStats();
+            if(v === 'db') populateVoices();
+        }
+
+        function toggleListeningMode() { settings.listening = !settings.listening; updateHubStats(); saveDatabase(getDatabase()); }
+
+        function startGame(mode) {
+            const db = getDatabase();
+            const cat = document.getElementById('cat-select').value;
+            const size = parseInt(document.getElementById('size-select').value);
+            
+            let allWords = [...FACTORY_DATA, ...db.custom];
+            let pool = allWords.filter(i => state.filter === 'both' || i.type === state.filter);
+            if(cat !== 'all') pool = pool.filter(i => i.cat === cat);
+
+            if(mode === 'smart') {
+                pool = pool.filter(i => (db.mastery[i.ja]?.lvl || 0) < 3);
+                if(pool.length === 0) return alert("All words in this filter are mastered!");
+                state.mode = 'smart';
+                const elMode = document.getElementById('game-mode-label');
+                if (elMode) elMode.innerText = "SMART REVIEW";
+            } else {
+                pool.sort((a, b) => {
+                    const ma = db.mastery[a.ja] || { seenCount: 0, lastSeen: 0 };
+                    const mb = db.mastery[b.ja] || { seenCount: 0, lastSeen: 0 };
+                    if (ma.seenCount !== mb.seenCount) return ma.seenCount - mb.seenCount;
+                    return ma.lastSeen - mb.lastSeen;
+                });
+                const bufferSize = size * 2;
+                pool = pool.slice(0, bufferSize).sort(() => Math.random() - 0.5);
+                
+                state.mode = 'normal';
+                const elMode = document.getElementById('game-mode-label');
+                if (elMode) elMode.innerText = `${cat.toUpperCase()} LESSON`;
+            }
+            
+            state.currentDeck = pool.slice(0, size);
+            state.index = 0; state.stats = { c: 0, f: 0 }; state.misses = {}; state.round = 1;
+            changeView('game');
+            updateDisplay(false);
+        }
+
+        function flipCard() {
+            if(state.flipped || state.busy) return;
+            state.flipped = true;
+            document.getElementById('card').classList.add('flip-card-flipped');
+            document.getElementById('game-controls').classList.remove('opacity-0', 'pointer-events-none');
+            speak(state.currentDeck[state.index].ja);
+        }
+
+        function handleResult(isCorrect) {
+            if(state.busy) return; state.busy = true;
+            const word = state.currentDeck[state.index];
+            if(isCorrect) { state.stats.c++; updateWordMastery(word.ja, true); }
+            else {
+                state.misses[word.ja] = (state.misses[word.ja] || 0) + 1;
+                if(state.misses[word.ja] < 2) state.currentDeck.push(word);
+                else state.stats.f++;
+                updateWordMastery(word.ja, false);
+            }
+            state.index++;
+            if(state.index >= state.currentDeck.length) finishSession();
+            else updateDisplay(true);
+        }
+
+        function updateDisplay(delay) {
+            state.flipped = false;
+            document.getElementById('card').classList.remove('flip-card-flipped');
+            document.getElementById('game-controls').classList.add('opacity-0', 'pointer-events-none');
+            
+            setTimeout(() => {
+                const word = state.currentDeck[state.index];
+                if(word) {
+                    const elJa = document.getElementById('card-ja');
+                    const elLIcon = document.getElementById('card-listening-icon');
+                    if (settings.listening) {
+                        elJa.classList.add('hidden');
+                        elLIcon.classList.remove('hidden');
+                    } else {
+                        elJa.classList.remove('hidden');
+                        elJa.innerText = word.ja;
+                        elLIcon.classList.add('hidden');
+                    }
+                    document.getElementById('card-en').innerText = word.en;
+                    document.getElementById('card-ro').innerText = word.ro;
+                    document.getElementById('card-cat-tag').innerText = (word.cat || 'OBJECTS').toUpperCase();
+                    document.getElementById('game-round').innerText = `Word ${state.index + 1} of ${state.currentDeck.length}`;
+                    document.getElementById('game-progress').style.width = `${(state.index / state.currentDeck.length) * 100}%`;
+                }
+                state.busy = false;
+            }, delay ? 400 : 0);
+        }
+
+        function finishSession() {
+            const db = getDatabase();
+            const today = new Date().toDateString();
+            if(db.lastDate !== today) {
+                db.streak = (new Date(db.lastDate).getTime() > Date.now() - 172800000) ? db.streak + 1 : 1;
+                db.lastDate = today;
+            }
+            db.history.unshift({ date: new Date().toISOString(), c: state.stats.c, f: state.stats.f, t: state.stats.c + state.stats.f, mode: state.mode });
+            saveDatabase(db);
+            alert(`Lesson Complete!\n✓ ${state.stats.c} Correct\n✗ ${state.stats.f} Failed Twice`);
+            changeView('menu');
+        }
+
+        function renderLibrary() {
+            const db = getDatabase();
+            const search = document.getElementById('lib-search').value.toLowerCase();
+            const allWords = [...FACTORY_DATA, ...db.custom];
+            
+            const filtered = allWords.filter(w => 
+                w.ja.includes(search) || w.en.toLowerCase().includes(search) || w.ro.toLowerCase().includes(search)
+            );
+
+            document.getElementById('lib-count').innerText = `${filtered.length} Words Found`;
+            const grid = document.getElementById('lib-grid');
+            grid.innerHTML = filtered.map(w => {
+                const m = db.mastery[w.ja] || { lvl: 0, seenCount: 0 };
+                const isCustom = db.custom.some(cw => cw.ja === w.ja);
+                return `<div class="bg-white p-5 rounded-3xl border shadow-sm text-center relative hover:border-emerald-300 transition-all active:scale-95 group">
+                    ${isCustom ? `<button onclick="deleteCustomWord('${w.ja}', event)" class="absolute top-2 right-2 text-rose-300 hover:text-rose-500 p-1"><svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>` : ''}
+                    <div onclick="speak('${w.ja}')" class="cursor-pointer">
+                        <span class="text-[7px] font-bold text-slate-300 uppercase">${(w.cat || 'OBJECTS').toUpperCase()}</span>
+                        <h4 class="text-2xl font-bold text-slate-800">${w.ja}</h4>
+                        <p class="text-[10px] text-slate-400 font-medium">${w.en}</p>
+                        <div class="text-[8px] font-bold text-slate-300 mt-2">Seen ${m.seenCount} times</div>
+                        <div class="flex justify-center gap-0.5 mt-1">${Array(5).fill(0).map((_,i) => `<div class="w-1 h-1 rounded-full ${i < m.lvl ? 'bg-emerald-500' : 'bg-slate-200'}"></div>`).join('')}</div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function deleteCustomWord(ja, e) {
+            e.stopPropagation();
+            if(confirm(`Delete "${ja}"?`)) {
+                const db = getDatabase();
+                db.custom = db.custom.filter(w => w.ja !== ja);
+                saveDatabase(db);
+                renderLibrary();
+            }
+        }
+
+        function renderAnalytics() {
+            const db = getDatabase();
+            const masteryCounts = [0, 0, 0, 0, 0, 0];
+            Object.values(db.mastery).forEach(m => { if (m.lvl >= 0 && m.lvl <= 5) masteryCounts[m.lvl]++; });
+            const maxVal = Math.max(...masteryCounts, 1);
+            const chart = document.getElementById('analytics-chart');
+            chart.innerHTML = masteryCounts.map((count, i) => {
+                const h = (count / maxVal) * 100;
+                return `<div class="flex-1 flex flex-col items-center">
+                    <span class="text-[8px] font-bold text-slate-400 mb-1">${count}</span>
+                    <div class="w-full bg-emerald-100 rounded-t-lg mastery-bar overflow-hidden flex items-end shadow-inner" style="height: ${h}%">
+                        <div class="w-full bg-emerald-500" style="height: 100%"></div>
+                    </div>
+                </div>`;
+            }).join('');
+            document.getElementById('history-list').innerHTML = db.history.slice(0,5).map(h => `
+                <div class="bg-slate-50 p-4 rounded-2xl flex justify-between items-center border border-slate-100">
+                    <div><span class="text-[8px] font-bold text-slate-300 uppercase tracking-widest">${new Date(h.date).toLocaleDateString()}</span><p class="font-bold text-slate-700 text-xs">${h.mode === 'smart' ? 'Smart Review' : 'Lesson'} • ${h.t} words</p></div>
+                    <div class="flex gap-2 text-[10px] font-bold"><span class="text-emerald-600">✓ ${h.c}</span><span class="text-rose-400">✗ ${h.f}</span></div>
+                </div>`).join('');
+        }
+
+        function processImport() {
+            const textEl = document.getElementById('import-text');
+            const text = textEl ? textEl.value.trim() : "";
+            if(!text) return;
+            const lines = text.split('\n');
+            const db = getDatabase();
+            const existing = [...FACTORY_DATA, ...db.custom].map(w => w.ja);
+            lines.forEach((line) => {
+                const p = line.split(',').map(s => s.trim());
+                if(p.length >= 4) {
+                    const [ja, en, ro, type, cat] = p;
+                    if(!existing.includes(ja)) {
+                        db.custom.push({ ja, en, ro, type, cat: cat || 'objects' });
+                        existing.push(ja);
+                    }
+                }
+            });
+            saveDatabase(db);
+            if (textEl) textEl.value = '';
+            changeView('menu');
+        }
+
+        function updateWordMastery(ja, win) {
+            const db = getDatabase();
+            if(!db.mastery[ja]) db.mastery[ja] = { win: 0, lose: 0, lvl: 0, seenCount: 0, lastSeen: 0 };
+            
+            db.mastery[ja].seenCount++;
+            db.mastery[ja].lastSeen = Date.now();
+            
+            if(win) db.mastery[ja].win++; else db.mastery[ja].lose++;
+            db.mastery[ja].lvl = Math.min(5, Math.max(0, db.mastery[ja].win - (db.mastery[ja].lose * 2)));
+            saveDatabase(db);
+        }
+
+        function setFilter(f) {
+            state.filter = f;
+            updateHubStats();
+        }
+
+        function populateVoices() {
+            const select = document.getElementById('voice-select');
+            if(!select) return;
+            const voices = window.speechSynthesis.getVoices().filter(v => v.lang.startsWith('ja'));
+            select.innerHTML = voices.map(v => `<option value="${v.name}" ${settings.selectedVoice === v.name ? 'selected' : ''}>${v.name}</option>`).join('');
+        }
+
+        function saveVoicePreference() {
+            settings.selectedVoice = document.getElementById('voice-select').value;
+            saveDatabase(getDatabase());
+        }
+
+        function speak(text) {
+            if(!settings.audio || !('speechSynthesis' in window)) return;
+            window.speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(text);
+            u.lang = 'ja-JP'; u.rate = settings.speed;
+            const voices = window.speechSynthesis.getVoices();
+            const preferred = voices.find(v => v.name === settings.selectedVoice);
+            if (preferred) u.voice = preferred;
+            window.speechSynthesis.speak(u);
+        }
+
+        function speakCurrent(e) { if(e) e.stopPropagation(); const w = state.currentDeck[state.index]?.ja; if(w) speak(w); }
+        function toggleAudio() { settings.audio = !settings.audio; saveDatabase(getDatabase()); }
+        function toggleSpeed() { settings.speed = settings.speed === 0.9 ? 0.6 : 0.9; saveDatabase(getDatabase()); }
+        
+        window.showQuitModal = () => document.getElementById('quit-modal').classList.remove('hidden');
+        window.hideQuitModal = () => document.getElementById('quit-modal').classList.add('hidden');
+        window.quitGameNow = () => { hideQuitModal(); changeView('menu'); };
+
+        function exportJSON() {
+            const blob = new Blob([JSON.stringify(getDatabase(), null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Japanese_DB_Backup.json`;
+            a.click();
+        }
+
+        function importJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    // Check if structure matches
+                    if (data.mastery || data.history || data.custom) {
+                        if (confirm("This will replace your current local data with the file content. Continue?")) {
+                            saveDatabase(data);
+                            alert("Import successful! Reloading...");
+                            location.reload();
+                        }
+                    } else {
+                        alert("Error: File is not a valid Japanese Study Hub database.");
+                    }
+                } catch (err) {
+                    alert("Error reading file: " + err.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function clearDatabase() {
+            if(confirm("PERMANENTLY reset all data?")) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => { 
+            const db = getDatabase();
+            settings = {...settings, ...db.settings};
+            updateHubStats(); 
+            setFilter('h');
+            window.speechSynthesis.onvoiceschanged = populateVoices;
+            populateVoices();
+        });
+    </script>
+</body>
+</html>
