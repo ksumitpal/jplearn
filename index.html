@@ -231,10 +231,20 @@
             <div id="view-library" class="hidden view-animate bg-slate-50">
                 <div class="p-6 border-b bg-white flex flex-col gap-4 shrink-0">
                     <div class="flex justify-between items-center">
-                        <div><h2 class="text-2xl font-bold text-slate-800">Library</h2><p id="lib-count" class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">0 Words Found</p></div>
+                        <div class="flex items-center gap-3">
+                            <h2 class="text-2xl font-bold text-slate-800">Library</h2>
+                            <button onclick="cleanDuplicates()" title="Clean Duplicates" class="p-1.5 bg-emerald-50 text-emerald-600 rounded-full hover:bg-emerald-100 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-7.714 2.143L11 21l-2.143-7.714L1 12l6.857-2.286L11 3z" />
+                                </svg>
+                            </button>
+                        </div>
                         <button onclick="changeView('menu')" class="p-2 bg-slate-50 rounded-xl"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
                     </div>
-                    <input type="text" id="lib-search" oninput="renderLibrary()" placeholder="Search Japanese or English..." class="w-full bg-slate-100 border border-slate-200 rounded-2xl py-3 px-4 text-xs font-medium focus:outline-none focus:border-emerald-400 transition-colors">
+                    <div class="flex flex-col gap-1">
+                        <p id="lib-count" class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">0 Words Found</p>
+                        <input type="text" id="lib-search" oninput="renderLibrary()" placeholder="Search Japanese or English..." class="w-full bg-slate-100 border border-slate-200 rounded-2xl py-3 px-4 text-xs font-medium focus:outline-none focus:border-emerald-400 transition-colors">
+                    </div>
                 </div>
                 <div id="lib-grid" class="p-6 grid grid-cols-2 gap-4 pb-12"></div>
             </div>
@@ -385,7 +395,7 @@
             { ja: "ビーチ", en: "Beach", ro: "biichi", type: "k", cat: "travel" },
             { ja: "エレベーター", en: "Elevator", ro: "erebeetaa", type: "k", cat: "objects" },
             { ja: "エスカレーター", en: "Escalator", ro: "esukareetaa", type: "k", cat: "objects" },
-            { ja: "コンビニ", en: "Convenience Store", ro: "konbini", type: "k", cat: "travel" },
+            { ja: "コンビニ", en: "Convenience Store", konbini: "k", type: "k", cat: "travel" },
             { ja: "スーパー", en: "Supermarket", ro: "suupaa", type: "k", cat: "travel" },
             { ja: "バイク", en: "Motorcycle", ro: "baiku", type: "k", cat: "travel" },
             { ja: "トラック", en: "Truck", ro: "torakku", type: "k", cat: "travel" },
@@ -431,7 +441,6 @@
         function getAllWords() {
             const db = getDatabase();
             const combined = [...FACTORY_DATA, ...db.custom];
-            // Filter out hidden, apply overrides
             return combined.filter(w => !db.hidden.includes(w.ja)).map(w => {
                 return db.overrides[w.ja] ? { ...w, ...db.overrides[w.ja] } : w;
             });
@@ -594,6 +603,37 @@
             changeView('menu');
         }
 
+        // DUPLICATE CLEANER
+        function cleanDuplicates() {
+            const db = getDatabase();
+            const factoryKeys = new Set(FACTORY_DATA.map(w => `${w.ja}_${w.type}`));
+            const seenCustom = new Set();
+            const toKeep = [];
+            let removedCount = 0;
+
+            db.custom.forEach(w => {
+                const key = `${w.ja}_${w.type}`;
+                // If it's in factory OR already seen in custom, it's a duplicate
+                if (factoryKeys.has(key) || seenCustom.has(key)) {
+                    removedCount++;
+                } else {
+                    seenCustom.add(key);
+                    toKeep.push(w);
+                }
+            });
+
+            if (removedCount > 0) {
+                if (confirm(`Found ${removedCount} duplicate words (exact matches for Japanese + Script type). Keep only one instance of each?`)) {
+                    db.custom = toKeep;
+                    saveDatabase(db);
+                    renderLibrary();
+                    alert(`Cleanup complete. Removed ${removedCount} duplicates.`);
+                }
+            } else {
+                alert("No duplicate words found in your library.");
+            }
+        }
+
         // LIBRARY MANAGEMENT
         function renderLibrary() {
             const db = getDatabase();
@@ -627,9 +667,7 @@
         function deleteWord(ja) {
             if(confirm(`Hide/Delete "${ja}"?`)) {
                 const db = getDatabase();
-                // 1. Remove from custom
                 db.custom = db.custom.filter(w => w.ja !== ja);
-                // 2. Add to hidden
                 if(!db.hidden.includes(ja)) db.hidden.push(ja);
                 saveDatabase(db);
                 renderLibrary();
@@ -658,24 +696,15 @@
                 type: document.getElementById('edit-type').value,
                 cat: document.getElementById('edit-cat').value
             };
-            
-            // If custom, update custom. If factory, add override.
             const customIdx = db.custom.findIndex(w => w.ja === state.editingKey);
-            if(customIdx > -1) {
-                db.custom[customIdx] = newWord;
-            } else {
-                db.overrides[state.editingKey] = newWord;
-            }
-            
+            if(customIdx > -1) { db.custom[customIdx] = newWord; }
+            else { db.overrides[state.editingKey] = newWord; }
             saveDatabase(db);
             closeEditModal();
             renderLibrary();
         }
 
-        function closeEditModal() {
-            document.getElementById('edit-modal').classList.add('hidden');
-            state.editingKey = null;
-        }
+        function closeEditModal() { document.getElementById('edit-modal').classList.add('hidden'); state.editingKey = null; }
 
         function renderAnalytics() {
             const db = getDatabase();
