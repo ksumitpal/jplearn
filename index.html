@@ -65,7 +65,7 @@
         }
         .scale-in { animation: scaleIn 0.2s ease-out forwards; }
 
-        /* Floating Scroll Button - Positioned absolutely inside relative app-root */
+        /* Floating Scroll Button */
         #btn-scroll-top {
             position: absolute;
             bottom: 24px;
@@ -128,7 +128,7 @@
                         </div>
                     </div>
 
-                    <button onclick="startGame('normal')" class="w-full bg-emerald-600 text-white font-bold py-5 rounded-[2rem] shadow-xl shadow-emerald-100 hover:bg-emerald-700 transition-all active:scale-95 flex items-center justify-center gap-3">
+                    <button onclick="startGame('normal')" class="w-full bg-emerald-600 text-white font-bold py-5 rounded-[2rem] shadow-xl shadow-emerald-100 hover:bg-emerald-700 transition-all active:scale-95 flex items-center justify-center gap-3 text-center">
                         Start Daily Lesson
                     </button>
 
@@ -137,12 +137,12 @@
                         Review Weak Words
                     </button>
 
-                    <div class="grid grid-cols-2 gap-3">
+                    <div class="grid grid-cols-2 gap-3 text-center">
                         <button onclick="changeView('library')" class="bg-white border-2 border-slate-100 text-slate-600 font-bold py-4 rounded-[2rem] hover:border-emerald-200 transition-all flex items-center justify-center gap-2">Library</button>
                         <button onclick="changeView('history')" class="bg-white border-2 border-slate-100 text-slate-600 font-bold py-4 rounded-[2rem] hover:border-emerald-200 transition-all flex items-center justify-center gap-2">Progress</button>
                     </div>
 
-                    <button onclick="changeView('import')" class="w-full bg-slate-800 text-white font-bold py-4 rounded-[2rem] hover:bg-slate-900 transition-all active:scale-95 flex items-center justify-center gap-2">
+                    <button onclick="changeView('import')" class="w-full bg-slate-800 text-white font-bold py-4 rounded-[2rem] hover:bg-slate-900 transition-all active:scale-95 flex items-center justify-center gap-2 text-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
                         Add Custom Words
                     </button>
@@ -151,10 +151,10 @@
                 <div class="mt-8 flex items-center justify-between bg-slate-50 p-4 rounded-3xl border border-slate-100 shrink-0">
                     <button id="btn-speed" onclick="toggleSpeed()" class="text-[9px] bg-white border border-slate-200 px-3 py-1.5 rounded-full font-bold text-slate-600 shadow-sm uppercase tracking-widest">Normal Speed</button>
                     <button id="btn-audio" onclick="toggleAudio()" class="text-[9px] bg-emerald-100 border border-emerald-200 px-3 py-1.5 rounded-full font-bold text-emerald-600 shadow-sm uppercase tracking-widest">Audio: ON</button>
-                    <button onclick="changeView('db')" class="text-[9px] bg-indigo-50 border border-indigo-100 px-3 py-1.5 rounded-full font-bold text-indigo-600 shadow-sm uppercase tracking-widest">Settings</button>
+                    <button onclick="changeView('db')" class="text-[9px] bg-indigo-50 border border-indigo-100 px-3 py-1.5 rounded-full font-bold text-indigo-600 shadow-sm uppercase tracking-widest text-center">Settings</button>
                 </div>
 
-                <div class="mt-6 flex justify-center gap-6 text-slate-400 font-bold text-[10px] uppercase tracking-widest shrink-0 pb-4">
+                <div class="mt-6 flex justify-center gap-6 text-slate-400 font-bold text-[10px] uppercase tracking-widest shrink-0 pb-4 text-center">
                     <span id="stat-words">0 Words</span>
                     <span id="stat-mastery">0% Mastered</span>
                 </div>
@@ -175,17 +175,17 @@
                         <div id="game-progress" class="bg-emerald-500 h-full w-0 transition-all duration-300"></div>
                     </div>
 
-                    <div class="perspective-1000 w-full max-w-[320px] aspect-[4/5] shrink-0">
+                    <div class="perspective-1000 w-full max-w-[320px] aspect-[4/5] shrink-0 text-center">
                         <div id="card" onclick="flipCard()" class="flip-card-inner w-full h-full relative cursor-pointer shadow-2xl rounded-[3rem]">
                             <div class="flip-card-front absolute inset-0 bg-white flex flex-col items-center justify-center p-8 border-4 border-emerald-50 shadow-inner">
                                 <span id="card-cat-tag" class="absolute top-8 text-[10px] font-bold bg-slate-100 text-slate-400 px-3 py-1 rounded-full uppercase tracking-widest">CATEGORY</span>
                                 <div id="card-front-content" class="flex flex-col items-center">
                                     <h2 id="card-ja" class="text-7xl font-bold text-slate-800 text-center">...</h2>
                                     <div id="card-listening-icon" class="hidden text-emerald-400 animate-bounce flex flex-col items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1(0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
                                     </div>
                                     <button id="btn-front-repeat" onclick="speakCurrent(event)" class="hidden mt-4 p-3 bg-emerald-50 text-emerald-600 rounded-full hover:bg-emerald-100 active:scale-90 transition-all border border-emerald-100">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
                                     </button>
                                 </div>
                                 <div id="idk-container" class="mt-12 flex flex-col items-center gap-4">
@@ -203,7 +203,7 @@
                         </div>
                     </div>
 
-                    <div id="game-controls" class="w-full flex gap-4 opacity-0 pointer-events-none transition-all duration-300 pb-12 shrink-0">
+                    <div id="game-controls" class="w-full flex gap-4 opacity-0 pointer-events-none transition-all duration-300 pb-12 shrink-0 text-center">
                         <button id="btn-wrong" onclick="handleResult(false)" class="flex-1 bg-white border-2 border-rose-100 text-rose-500 font-bold py-5 rounded-[2.2rem] shadow-sm active:scale-95 transition-all text-sm">WRONG</button>
                         <button id="btn-correct" onclick="handleResult(true)" class="flex-1 bg-emerald-600 text-white font-bold py-5 rounded-[2.2rem] shadow-lg active:scale-95 transition-all text-sm">CORRECT</button>
                         <button id="btn-idk-next" onclick="handleResult(false)" class="hidden flex-1 bg-amber-500 text-white font-bold py-5 rounded-[2.2rem] shadow-lg active:scale-95 transition-all text-sm">Next Word</button>
@@ -213,7 +213,7 @@
 
             <!-- 3. PROGRESS VIEW -->
             <div id="view-history" class="hidden view-animate bg-white p-8 h-full">
-                <div class="flex justify-between items-center mb-8 shrink-0">
+                <div class="flex justify-between items-center mb-8 shrink-0 text-left">
                     <h2 class="text-2xl font-bold text-slate-800">Progress</h2>
                     <button onclick="changeView('menu')" class="p-2 bg-slate-50 rounded-xl"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
                 </div>
@@ -246,7 +246,7 @@
                                 </svg>
                             </button>
                         </div>
-                        <button onclick="changeView('menu')" class="p-2 bg-slate-50 rounded-xl"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
+                        <button onclick="changeView('menu')" class="p-2 bg-slate-50 rounded-xl text-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
                     </div>
                     <div class="flex flex-col gap-1 text-left">
                         <p id="lib-count" class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">0 Words Found</p>
@@ -258,7 +258,7 @@
 
             <!-- 5. IMPORT VIEW -->
             <div id="view-import" class="hidden view-animate bg-white p-8 h-full">
-                <div class="flex justify-between items-center mb-6 shrink-0"><h2 class="text-2xl font-bold text-slate-800 text-left">Add Words</h2><button onclick="changeView('menu')">Close</button></div>
+                <div class="flex justify-between items-center mb-6 shrink-0 text-left"><h2 class="text-2xl font-bold text-slate-800">Add Words</h2><button onclick="changeView('menu')" class="text-center">Close</button></div>
                 <div class="space-y-4 pb-12 text-left">
                     <textarea id="import-text" class="w-full h-48 bg-slate-50 border rounded-3xl p-5 text-xs font-mono text-left" placeholder="ja, en, ro, type (h/k), category"></textarea>
                     <button onclick="processImport()" class="w-full bg-emerald-600 text-white font-bold py-4 rounded-2xl shadow-lg active:scale-95 text-center">Import Words</button>
@@ -268,41 +268,42 @@
 
             <!-- 6. SETTINGS VIEW -->
             <div id="view-db" class="hidden view-animate bg-slate-50 p-6 h-full">
-                <div class="flex justify-between items-center mb-6 shrink-0"><h2 class="text-2xl font-bold text-slate-800 tracking-tight text-left">Settings</h2><button onclick="changeView('menu')" class="p-2 bg-white rounded-xl shadow-sm text-xs font-bold uppercase tracking-widest text-slate-400">Close</button></div>
+                <div class="flex justify-between items-center mb-6 shrink-0 text-left"><h2 class="text-2xl font-bold text-slate-800 tracking-tight">Settings</h2><button onclick="changeView('menu')" class="p-2 bg-white rounded-xl shadow-sm text-xs font-bold uppercase tracking-widest text-slate-400 text-center">Close</button></div>
                 <div class="space-y-6 pb-12 text-left">
                     <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
                         <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Native Voice Selection</h4>
                         <select id="voice-select" onchange="saveVoicePreference()" class="w-full text-xs font-bold bg-slate-50 border border-slate-200 rounded-xl px-3 py-3 outline-none shadow-inner cursor-pointer"></select>
                     </div>
-                    <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                    <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 text-center">
                         <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Data Management</h4>
                         <div class="grid grid-cols-1 gap-3">
-                            <button onclick="exportJSON()" class="w-full bg-emerald-600 text-white font-bold py-4 rounded-2xl shadow-sm hover:bg-emerald-700 transition-all text-xs text-center">Export Database</button>
+                            <button onclick="exportJSON()" class="w-full bg-emerald-600 text-white font-bold py-4 rounded-2xl shadow-sm hover:bg-emerald-700 transition-all text-xs">Export Database</button>
                             <input type="file" id="db-import-input" class="hidden" accept=".json" onchange="importJSON(event)">
-                            <button onclick="document.getElementById('db-import-input').click()" class="w-full bg-indigo-50 text-indigo-600 border border-indigo-100 font-bold py-4 rounded-2xl hover:bg-indigo-100 transition-all text-xs text-center">Import Database</button>
-                            <button onclick="clearDatabase()" class="w-full bg-rose-50 text-rose-500 font-bold py-4 rounded-2xl hover:bg-rose-100 transition-all text-xs text-center">Clear All Data</button>
+                            <button onclick="document.getElementById('db-import-input').click()" class="w-full bg-indigo-50 text-indigo-600 border border-indigo-100 font-bold py-4 rounded-2xl hover:bg-indigo-100 transition-all text-xs">Import Database</button>
+                            <button onclick="clearDatabase()" class="w-full bg-rose-50 text-rose-500 font-bold py-4 rounded-2xl hover:bg-rose-100 transition-all text-xs">Clear All Data</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Floating Scroll Top Button (Now positioned relative to app-root) -->
+        <!-- Floating Scroll Top Button -->
         <button id="btn-scroll-top" onclick="scrollToTop()" class="hidden bg-emerald-600 text-white p-3 rounded-full shadow-2xl active:scale-90 transition-all hover:bg-emerald-700">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 15l7-7 7 7" />
             </svg>
         </button>
 
+        <!-- SHARED MODALS -->
         <!-- EDIT MODAL -->
-        <div id="edit-modal" class="hidden absolute inset-0 z-[110] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-6">
-            <div class="bg-white rounded-[2rem] p-6 w-full max-w-[350px] scale-in shadow-2xl space-y-4 text-left">
+        <div id="edit-modal" class="hidden absolute inset-0 z-[110] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-6 text-left">
+            <div class="bg-white rounded-[2rem] p-6 w-full max-w-[350px] scale-in shadow-2xl space-y-4">
                 <h3 class="text-xl font-bold text-slate-800">Edit Word</h3>
                 <div class="space-y-3">
                     <input id="edit-ja" type="text" placeholder="Japanese" class="w-full bg-slate-50 border p-2 rounded-lg text-sm text-left">
                     <input id="edit-en" type="text" placeholder="English" class="w-full bg-slate-50 border p-2 rounded-lg text-sm text-left">
                     <input id="edit-ro" type="text" placeholder="Romaji" class="w-full bg-slate-50 border p-2 rounded-lg text-sm text-left">
-                    <div class="grid grid-cols-2 gap-2">
+                    <div class="grid grid-cols-2 gap-2 text-left">
                         <select id="edit-type" class="bg-slate-50 border p-2 rounded-lg text-sm">
                             <option value="h">Hiragana</option>
                             <option value="k">Katakana</option>
@@ -310,9 +311,9 @@
                         <select id="edit-cat" class="bg-slate-50 border p-2 rounded-lg text-sm"></select>
                     </div>
                 </div>
-                <div class="flex flex-col gap-2 pt-2">
-                    <button onclick="saveEdit()" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl text-center">Save Changes</button>
-                    <button onclick="closeEditModal()" class="w-full bg-slate-100 text-slate-500 font-bold py-2 rounded-xl text-xs text-center">Cancel</button>
+                <div class="flex flex-col gap-2 pt-2 text-center">
+                    <button onclick="saveEdit()" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl">Save Changes</button>
+                    <button onclick="closeEditModal()" class="w-full bg-slate-100 text-slate-500 font-bold py-2 rounded-xl text-xs">Cancel</button>
                 </div>
             </div>
         </div>
@@ -320,11 +321,11 @@
         <!-- QUIT MODAL -->
         <div id="quit-modal" class="hidden absolute inset-0 z-[100] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-8 text-center">
             <div class="bg-white rounded-[2.5rem] p-8 w-full max-w-[320px] scale-in shadow-2xl">
-                <h3 class="text-xl font-bold mb-2 text-slate-800 tracking-tight text-center">Quit Session?</h3>
-                <p class="text-slate-400 mb-8 text-sm text-center">Your round progress will not be saved.</p>
+                <h3 class="text-xl font-bold mb-2 text-slate-800 tracking-tight">Quit Session?</h3>
+                <p class="text-slate-400 mb-8 text-sm">Your round progress will not be saved.</p>
                 <div class="flex flex-col gap-3">
-                    <button onclick="quitGameNow()" class="w-full bg-rose-50 text-white font-bold py-3.5 rounded-2xl hover:bg-rose-600 transition-all shadow-md text-center">Yes, Quit</button>
-                    <button onclick="hideQuitModal()" class="w-full bg-slate-100 text-slate-600 font-bold py-3.5 rounded-2xl hover:bg-slate-200 transition-all text-center">Cancel</button>
+                    <button onclick="quitGameNow()" class="w-full bg-rose-50 text-white font-bold py-3.5 rounded-2xl hover:bg-rose-600 transition-all shadow-md">Yes, Quit</button>
+                    <button onclick="hideQuitModal()" class="w-full bg-slate-100 text-slate-600 font-bold py-3.5 rounded-2xl hover:bg-slate-200 transition-all">Cancel</button>
                 </div>
             </div>
         </div>
@@ -462,7 +463,6 @@
             if(v === 'menu') updateHubStats();
             if(v === 'db') populateVoices();
             document.querySelector('.view-container').scrollTop = 0;
-            // Ensure scroll button is hidden when leaving library
             if(v !== 'library') document.getElementById('btn-scroll-top').classList.add('hidden');
         }
 
@@ -613,16 +613,16 @@
             if(grid) {
                 grid.innerHTML = filtered.map(w => {
                     const m = db.mastery[w.ja] || { lvl: 0, seenCount: 0 };
-                    return `<div class="bg-white p-4 rounded-3xl border shadow-sm text-center relative hover:border-emerald-300 transition-all group">
+                    return `<div class="bg-white p-4 rounded-3xl border shadow-sm text-center relative hover:border-emerald-300 transition-all group text-center">
                         <div class="flex justify-between items-center mb-2 px-1">
-                            <button onclick="openEditModal('${w.ja}')" class="text-slate-300 hover:text-indigo-500 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2(0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg></button>
-                            <button onclick="deleteWord('${w.ja}')" class="text-slate-300 hover:text-rose-500 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2(0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button>
+                            <button onclick="openEditModal('${w.ja}')" class="text-slate-300 hover:text-indigo-500 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg></button>
+                            <button onclick="deleteWord('${w.ja}')" class="text-slate-300 hover:text-rose-500 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button>
                         </div>
-                        <div onclick="speak('${w.ja}')" class="cursor-pointer active:scale-95 transition-transform">
-                            <span class="text-[7px] font-bold text-slate-300 uppercase tracking-widest">${(w.cat || 'OBJECTS').toUpperCase()}</span>
+                        <div onclick="speak('${w.ja}')" class="cursor-pointer active:scale-95 transition-transform text-center">
+                            <span class="text-[7px] font-bold text-slate-300 uppercase tracking-widest text-center">${(w.cat || 'OBJECTS').toUpperCase()}</span>
                             <h4 class="text-2xl font-bold text-slate-800 my-1 text-center">${w.ja}</h4>
                             <p class="text-[10px] text-slate-400 font-medium text-center">${w.en}</p>
-                            <div class="text-[7px] font-bold text-slate-300 mt-2 text-center">Seen ${m.seenCount}</div>
+                            <div class="text-[7px] font-bold text-slate-300 mt-2 text-center text-center">Seen ${m.seenCount}</div>
                             <div class="flex justify-center gap-0.5 mt-1">${Array(5).fill(0).map((_,i) => `<div class="w-1 h-1 rounded-full ${i < m.lvl ? 'bg-emerald-500' : 'bg-slate-200'}"></div>`).join('')}</div>
                         </div>
                     </div>`;
@@ -650,8 +650,11 @@
                 cat: document.getElementById('edit-cat').value.toLowerCase()
             };
             const customIdx = db.custom.findIndex(w => w.ja === state.editingKey);
-            if(customIdx > -1) db.custom[customIdx] = newWord; else db.overrides[state.editingKey] = newWord;
-            saveDatabase(db); closeEditModal(); renderLibrary();
+            if(customIdx > -1) { db.custom[customIdx] = newWord; }
+            else { db.overrides[state.editingKey] = newWord; }
+            saveDatabase(db);
+            closeEditModal();
+            renderLibrary();
         }
 
         function closeEditModal() { document.getElementById('edit-modal').classList.add('hidden'); state.editingKey = null; }
@@ -719,6 +722,7 @@
             select.innerHTML = voices.map(v => `<option value="${v.name}" ${settings.selectedVoice === v.name ? 'selected' : ''}>${v.name}</option>`).join('');
         }
         function saveVoicePreference() { settings.selectedVoice = document.getElementById('voice-select').value; saveDatabase(getDatabase()); }
+        
         function speak(text) {
             if(!settings.audio) return; window.speechSynthesis.cancel();
             const u = new SpeechSynthesisUtterance(text); u.lang = 'ja-JP'; u.rate = settings.speed;
@@ -726,6 +730,7 @@
             const preferred = voices.find(v => v.name === settings.selectedVoice);
             if (preferred) u.voice = preferred; window.speechSynthesis.speak(u);
         }
+
         function speakCurrent(e) { if(e) e.stopPropagation(); speak(state.currentDeck[state.index]?.ja); }
         function toggleAudio() { settings.audio = !settings.audio; updateHubStats(); saveDatabase(getDatabase()); }
         function toggleSpeed() { settings.speed = settings.speed === 0.9 ? 0.6 : 0.9; updateHubStats(); saveDatabase(getDatabase()); }
@@ -741,16 +746,11 @@
             populateCategoryDropdowns(); updateHubStats(); setFilter(state.filter);
             window.speechSynthesis.onvoiceschanged = populateVoices; populateVoices();
             
-            // Fixed Scroll Listener - attaches to the view-container
             document.querySelector('.view-container').addEventListener('scroll', (e) => {
                 const btn = document.getElementById('btn-scroll-top');
                 const isLibrary = !document.getElementById('view-library').classList.contains('hidden');
-                // Show button if scrolled down > 200px and we are in library
-                if (isLibrary && e.target.scrollTop > 200) {
-                    btn.classList.remove('hidden');
-                } else {
-                    btn.classList.add('hidden');
-                }
+                if (isLibrary && e.target.scrollTop > 200) { btn.classList.remove('hidden'); } 
+                else { btn.classList.add('hidden'); }
             });
         });
     </script>
