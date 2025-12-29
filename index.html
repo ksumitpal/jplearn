@@ -56,6 +56,7 @@
         .view-container {
             flex: 1;
             overflow-y: auto;
+            position: relative;
         }
 
         @keyframes scaleIn {
@@ -63,13 +64,21 @@
             to { transform: scale(1); opacity: 1; }
         }
         .scale-in { animation: scaleIn 0.2s ease-out forwards; }
+
+        /* Floating Scroll Button - Positioned absolutely inside relative app-root */
+        #btn-scroll-top {
+            position: absolute;
+            bottom: 24px;
+            right: 24px;
+            z-index: 100;
+        }
     </style>
 </head>
 <body>
 
     <div id="app-root">
         <!-- TOP STATUS BAR -->
-        <div class="px-6 pt-6 pb-2 flex justify-between items-center z-10 shrink-0">
+        <div class="px-6 pt-6 pb-2 flex justify-between items-center z-10 shrink-0 text-left">
             <div class="flex gap-2">
                 <span id="streak-count" class="text-[9px] font-bold bg-amber-100 text-amber-600 px-2.5 py-1 rounded-full uppercase tracking-tighter shadow-sm">🔥 0 Day Streak</span>
             </div>
@@ -79,14 +88,15 @@
         </div>
 
         <div class="view-container scroll-hide">
+            
             <!-- 1. HUB MENU -->
             <div id="view-menu" class="view-animate p-6">
                 <div class="text-center mb-6 shrink-0">
                     <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-3 rotate-3 shadow-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
                     </div>
-                    <h1 class="text-3xl font-bold tracking-tight text-slate-800">Learn Japanese</h1>
-                    <p class="text-slate-400 text-sm font-medium">Study smarter, not harder</p>
+                    <h1 class="text-3xl font-bold tracking-tight text-slate-800 text-center">Learn Japanese</h1>
+                    <p class="text-slate-400 text-sm font-medium text-center">Study smarter, not harder</p>
                 </div>
 
                 <div class="space-y-4">
@@ -103,10 +113,6 @@
                         <div class="grid grid-cols-2 gap-2">
                             <select id="cat-select" class="text-[10px] font-bold bg-white border border-slate-200 rounded-xl px-3 py-2.5 outline-none shadow-sm cursor-pointer">
                                 <option value="all">All Categories</option>
-                                <option value="nature">Nature</option>
-                                <option value="food">Food</option>
-                                <option value="travel">Travel</option>
-                                <option value="objects">Objects</option>
                             </select>
                             <select id="size-select" class="text-[10px] font-bold bg-white border border-slate-200 rounded-xl px-3 py-2.5 outline-none shadow-sm cursor-pointer">
                                 <option value="10">10 Cards</option>
@@ -126,7 +132,7 @@
                         Start Daily Lesson
                     </button>
 
-                    <button onclick="startGame('smart')" id="btn-smart-review" class="w-full bg-rose-50 text-rose-600 border border-rose-100 font-bold py-4 rounded-[2rem] hover:bg-rose-100 transition-all active:scale-95 flex items-center justify-center gap-3 group">
+                    <button onclick="startGame('smart')" id="btn-smart-review" class="w-full bg-rose-50 text-rose-600 border border-rose-100 font-bold py-4 rounded-[2rem] hover:bg-rose-100 transition-all active:scale-95 flex items-center justify-center gap-3 group text-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:rotate-12 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                         Review Weak Words
                     </button>
@@ -176,22 +182,22 @@
                                 <div id="card-front-content" class="flex flex-col items-center">
                                     <h2 id="card-ja" class="text-7xl font-bold text-slate-800 text-center">...</h2>
                                     <div id="card-listening-icon" class="hidden text-emerald-400 animate-bounce flex flex-col items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1(0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
                                     </div>
                                     <button id="btn-front-repeat" onclick="speakCurrent(event)" class="hidden mt-4 p-3 bg-emerald-50 text-emerald-600 rounded-full hover:bg-emerald-100 active:scale-90 transition-all border border-emerald-100">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
                                     </button>
                                 </div>
                                 <div id="idk-container" class="mt-12 flex flex-col items-center gap-4">
-                                    <p id="card-flip-hint" class="text-slate-300 text-xs font-medium uppercase tracking-widest">Click to Flip</p>
+                                    <p id="card-flip-hint" class="text-slate-300 text-xs font-medium uppercase tracking-widest text-center">Click to Flip</p>
                                     <button onclick="handleIDK(event)" class="bg-amber-50 text-amber-600 border border-amber-100 text-[11px] font-bold py-2.5 px-8 rounded-full hover:bg-amber-100 active:scale-95 transition-all shadow-sm">I Don't Know</button>
                                 </div>
                             </div>
-                            <div class="flip-card-back absolute inset-0 bg-emerald-600 flex flex-col items-center justify-center p-8 text-white border-4 border-emerald-500">
-                                <h2 id="card-en" class="text-4xl font-bold mb-2 text-center">...</h2>
-                                <p id="card-ro" class="text-xl opacity-70 italic font-medium mb-8">...</p>
-                                <button onclick="speakCurrent(event)" class="p-4 bg-white/20 rounded-full hover:bg-white/30 active:scale-90 transition-all">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1(0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
+                            <div class="flip-card-back absolute inset-0 bg-emerald-600 flex flex-col items-center justify-center p-8 text-white border-4 border-emerald-500 text-center">
+                                <h2 id="card-en" class="text-4xl font-bold mb-2 text-white">...</h2>
+                                <p id="card-ro" class="text-xl opacity-70 italic font-medium mb-8 text-white">...</p>
+                                <button onclick="speakCurrent(event)" class="p-4 bg-white/20 rounded-full hover:bg-white/30 active:scale-90 transition-all mx-auto">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
                                 </button>
                             </div>
                         </div>
@@ -200,31 +206,19 @@
                     <div id="game-controls" class="w-full flex gap-4 opacity-0 pointer-events-none transition-all duration-300 pb-12 shrink-0">
                         <button id="btn-wrong" onclick="handleResult(false)" class="flex-1 bg-white border-2 border-rose-100 text-rose-500 font-bold py-5 rounded-[2.2rem] shadow-sm active:scale-95 transition-all text-sm">WRONG</button>
                         <button id="btn-correct" onclick="handleResult(true)" class="flex-1 bg-emerald-600 text-white font-bold py-5 rounded-[2.2rem] shadow-lg active:scale-95 transition-all text-sm">CORRECT</button>
-                        <button id="btn-idk-next" onclick="handleResult(false)" class="hidden flex-1 bg-amber-500 text-white font-bold py-5 rounded-[2.2rem] shadow-lg active:scale-95 transition-all">Next Word</button>
-                    </div>
-                </div>
-
-                <!-- QUIT MODAL -->
-                <div id="quit-modal" class="hidden absolute inset-0 z-[100] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-8 text-center">
-                    <div class="bg-white rounded-[2.5rem] p-8 w-full max-w-[320px] scale-in shadow-2xl">
-                        <h3 class="text-xl font-bold mb-2 text-slate-800 tracking-tight">Quit Session?</h3>
-                        <p class="text-slate-400 mb-8 text-sm">Your round progress will not be saved.</p>
-                        <div class="flex flex-col gap-3">
-                            <button onclick="quitGameNow()" class="w-full bg-rose-50 text-white font-bold py-3.5 rounded-2xl hover:bg-rose-600 transition-all shadow-md">Yes, Quit</button>
-                            <button onclick="hideQuitModal()" class="w-full bg-slate-100 text-slate-600 font-bold py-3.5 rounded-2xl hover:bg-slate-200 transition-all">Cancel</button>
-                        </div>
+                        <button id="btn-idk-next" onclick="handleResult(false)" class="hidden flex-1 bg-amber-500 text-white font-bold py-5 rounded-[2.2rem] shadow-lg active:scale-95 transition-all text-sm">Next Word</button>
                     </div>
                 </div>
             </div>
 
             <!-- 3. PROGRESS VIEW -->
-            <div id="view-history" class="hidden view-animate bg-white p-8">
+            <div id="view-history" class="hidden view-animate bg-white p-8 h-full">
                 <div class="flex justify-between items-center mb-8 shrink-0">
                     <h2 class="text-2xl font-bold text-slate-800">Progress</h2>
                     <button onclick="changeView('menu')" class="p-2 bg-slate-50 rounded-xl"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
                 </div>
                 
-                <div class="space-y-8 pb-8">
+                <div class="space-y-8 pb-8 text-center">
                     <div>
                         <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-6">Mastery Distribution</h4>
                         <div id="analytics-chart" class="flex items-end justify-between h-32 gap-2 px-2"></div>
@@ -233,7 +227,7 @@
                         </div>
                     </div>
 
-                    <div class="space-y-4">
+                    <div class="space-y-4 text-left">
                         <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Recent Sessions</h4>
                         <div id="history-list" class="space-y-3"></div>
                     </div>
@@ -241,8 +235,8 @@
             </div>
 
             <!-- 4. LIBRARY VIEW -->
-            <div id="view-library" class="hidden view-animate bg-slate-50">
-                <div class="p-6 border-b bg-white flex flex-col gap-4 shrink-0">
+            <div id="view-library" class="hidden view-animate bg-slate-50 min-h-full">
+                <div class="p-6 border-b bg-white flex flex-col gap-4 shrink-0 sticky top-0 z-20">
                     <div class="flex justify-between items-center">
                         <div class="flex items-center gap-3">
                             <h2 class="text-2xl font-bold text-slate-800">Library</h2>
@@ -254,28 +248,28 @@
                         </div>
                         <button onclick="changeView('menu')" class="p-2 bg-slate-50 rounded-xl"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
                     </div>
-                    <div class="flex flex-col gap-1">
+                    <div class="flex flex-col gap-1 text-left">
                         <p id="lib-count" class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">0 Words Found</p>
                         <input type="text" id="lib-search" oninput="renderLibrary()" placeholder="Search Japanese or English..." class="w-full bg-slate-100 border border-slate-200 rounded-2xl py-3 px-4 text-xs font-medium focus:outline-none focus:border-emerald-400 transition-colors">
                     </div>
                 </div>
-                <div id="lib-grid" class="p-6 grid grid-cols-2 gap-4 pb-12"></div>
+                <div id="lib-grid" class="p-6 grid grid-cols-2 gap-4 pb-24 text-center"></div>
             </div>
 
             <!-- 5. IMPORT VIEW -->
-            <div id="view-import" class="hidden view-animate bg-white p-8">
-                <div class="flex justify-between items-center mb-6 shrink-0"><h2 class="text-2xl font-bold text-slate-800">Add Words</h2><button onclick="changeView('menu')">Close</button></div>
-                <div class="space-y-4 pb-12">
-                    <textarea id="import-text" class="w-full h-48 bg-slate-50 border rounded-3xl p-5 text-xs font-mono" placeholder="ja, en, ro, type (h/k), category"></textarea>
-                    <button onclick="processImport()" class="w-full bg-emerald-600 text-white font-bold py-4 rounded-2xl shadow-lg active:scale-95">Import Words</button>
+            <div id="view-import" class="hidden view-animate bg-white p-8 h-full">
+                <div class="flex justify-between items-center mb-6 shrink-0"><h2 class="text-2xl font-bold text-slate-800 text-left">Add Words</h2><button onclick="changeView('menu')">Close</button></div>
+                <div class="space-y-4 pb-12 text-left">
+                    <textarea id="import-text" class="w-full h-48 bg-slate-50 border rounded-3xl p-5 text-xs font-mono text-left" placeholder="ja, en, ro, type (h/k), category"></textarea>
+                    <button onclick="processImport()" class="w-full bg-emerald-600 text-white font-bold py-4 rounded-2xl shadow-lg active:scale-95 text-center">Import Words</button>
                     <div id="import-status" class="hidden p-3 rounded-2xl text-[10px] font-bold text-center"></div>
                 </div>
             </div>
 
             <!-- 6. SETTINGS VIEW -->
-            <div id="view-db" class="hidden view-animate bg-slate-50 p-6">
-                <div class="flex justify-between items-center mb-6 shrink-0"><h2 class="text-2xl font-bold text-slate-800 tracking-tight">Settings</h2><button onclick="changeView('menu')" class="p-2 bg-white rounded-xl shadow-sm text-xs font-bold uppercase tracking-widest text-slate-400">Close</button></div>
-                <div class="space-y-6 pb-12">
+            <div id="view-db" class="hidden view-animate bg-slate-50 p-6 h-full">
+                <div class="flex justify-between items-center mb-6 shrink-0"><h2 class="text-2xl font-bold text-slate-800 tracking-tight text-left">Settings</h2><button onclick="changeView('menu')" class="p-2 bg-white rounded-xl shadow-sm text-xs font-bold uppercase tracking-widest text-slate-400">Close</button></div>
+                <div class="space-y-6 pb-12 text-left">
                     <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
                         <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Native Voice Selection</h4>
                         <select id="voice-select" onchange="saveVoicePreference()" class="w-full text-xs font-bold bg-slate-50 border border-slate-200 rounded-xl px-3 py-3 outline-none shadow-inner cursor-pointer"></select>
@@ -283,40 +277,54 @@
                     <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
                         <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Data Management</h4>
                         <div class="grid grid-cols-1 gap-3">
-                            <button onclick="exportJSON()" class="w-full bg-emerald-600 text-white font-bold py-4 rounded-2xl shadow-sm hover:bg-emerald-700 transition-all text-xs">Export Database</button>
+                            <button onclick="exportJSON()" class="w-full bg-emerald-600 text-white font-bold py-4 rounded-2xl shadow-sm hover:bg-emerald-700 transition-all text-xs text-center">Export Database</button>
                             <input type="file" id="db-import-input" class="hidden" accept=".json" onchange="importJSON(event)">
-                            <button onclick="document.getElementById('db-import-input').click()" class="w-full bg-indigo-50 text-indigo-600 border border-indigo-100 font-bold py-4 rounded-2xl hover:bg-indigo-100 transition-all text-xs">Import Database</button>
-                            <button onclick="clearDatabase()" class="w-full bg-rose-50 text-rose-500 font-bold py-4 rounded-2xl hover:bg-rose-100 transition-all text-xs">Clear All Data</button>
+                            <button onclick="document.getElementById('db-import-input').click()" class="w-full bg-indigo-50 text-indigo-600 border border-indigo-100 font-bold py-4 rounded-2xl hover:bg-indigo-100 transition-all text-xs text-center">Import Database</button>
+                            <button onclick="clearDatabase()" class="w-full bg-rose-50 text-rose-500 font-bold py-4 rounded-2xl hover:bg-rose-100 transition-all text-xs text-center">Clear All Data</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Floating Scroll Top Button (Now positioned relative to app-root) -->
+        <button id="btn-scroll-top" onclick="scrollToTop()" class="hidden bg-emerald-600 text-white p-3 rounded-full shadow-2xl active:scale-90 transition-all hover:bg-emerald-700">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 15l7-7 7 7" />
+            </svg>
+        </button>
+
         <!-- EDIT MODAL -->
         <div id="edit-modal" class="hidden absolute inset-0 z-[110] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-6">
-            <div class="bg-white rounded-[2rem] p-6 w-full max-w-[350px] scale-in shadow-2xl space-y-4">
+            <div class="bg-white rounded-[2rem] p-6 w-full max-w-[350px] scale-in shadow-2xl space-y-4 text-left">
                 <h3 class="text-xl font-bold text-slate-800">Edit Word</h3>
                 <div class="space-y-3">
-                    <input id="edit-ja" type="text" placeholder="Japanese" class="w-full bg-slate-50 border p-2 rounded-lg text-sm">
-                    <input id="edit-en" type="text" placeholder="English" class="w-full bg-slate-50 border p-2 rounded-lg text-sm">
-                    <input id="edit-ro" type="text" placeholder="Romaji" class="w-full bg-slate-50 border p-2 rounded-lg text-sm">
+                    <input id="edit-ja" type="text" placeholder="Japanese" class="w-full bg-slate-50 border p-2 rounded-lg text-sm text-left">
+                    <input id="edit-en" type="text" placeholder="English" class="w-full bg-slate-50 border p-2 rounded-lg text-sm text-left">
+                    <input id="edit-ro" type="text" placeholder="Romaji" class="w-full bg-slate-50 border p-2 rounded-lg text-sm text-left">
                     <div class="grid grid-cols-2 gap-2">
                         <select id="edit-type" class="bg-slate-50 border p-2 rounded-lg text-sm">
                             <option value="h">Hiragana</option>
                             <option value="k">Katakana</option>
                         </select>
-                        <select id="edit-cat" class="bg-slate-50 border p-2 rounded-lg text-sm">
-                            <option value="nature">Nature</option>
-                            <option value="food">Food</option>
-                            <option value="travel">Travel</option>
-                            <option value="objects">Objects</option>
-                        </select>
+                        <select id="edit-cat" class="bg-slate-50 border p-2 rounded-lg text-sm"></select>
                     </div>
                 </div>
                 <div class="flex flex-col gap-2 pt-2">
-                    <button onclick="saveEdit()" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl">Save Changes</button>
-                    <button onclick="closeEditModal()" class="w-full bg-slate-100 text-slate-500 font-bold py-2 rounded-xl text-xs">Cancel</button>
+                    <button onclick="saveEdit()" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl text-center">Save Changes</button>
+                    <button onclick="closeEditModal()" class="w-full bg-slate-100 text-slate-500 font-bold py-2 rounded-xl text-xs text-center">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- QUIT MODAL -->
+        <div id="quit-modal" class="hidden absolute inset-0 z-[100] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-8 text-center">
+            <div class="bg-white rounded-[2.5rem] p-8 w-full max-w-[320px] scale-in shadow-2xl">
+                <h3 class="text-xl font-bold mb-2 text-slate-800 tracking-tight text-center">Quit Session?</h3>
+                <p class="text-slate-400 mb-8 text-sm text-center">Your round progress will not be saved.</p>
+                <div class="flex flex-col gap-3">
+                    <button onclick="quitGameNow()" class="w-full bg-rose-50 text-white font-bold py-3.5 rounded-2xl hover:bg-rose-600 transition-all shadow-md text-center">Yes, Quit</button>
+                    <button onclick="hideQuitModal()" class="w-full bg-slate-100 text-slate-600 font-bold py-3.5 rounded-2xl hover:bg-slate-200 transition-all text-center">Cancel</button>
                 </div>
             </div>
         </div>
@@ -324,88 +332,47 @@
 
     <script>
         const FACTORY_DATA = [
-            { ja: "やま", en: "Mountain", ro: "yama", type: "h", cat: "nature" },
-            { ja: "うみ", en: "Sea", ro: "umi", type: "h", cat: "nature" },
-            { ja: "そら", en: "Sky", ro: "sora", type: "h", cat: "nature" },
-            { ja: "かわ", en: "River", ro: "kawa", type: "h", cat: "nature" },
-            { ja: "き", en: "Tree", ro: "ki", type: "h", cat: "nature" },
-            { ja: "はな", en: "Flower", ro: "ha-na", type: "h", cat: "nature" },
-            { ja: "ゆき", en: "Snow", ro: "yu-ki", type: "h", cat: "nature" },
-            { ja: "みず", en: "Water", ro: "mi-zu", type: "h", cat: "nature" },
-            { ja: "すし", en: "Sushi", ro: "su-shi", type: "h", cat: "food" },
-            { ja: "おちゃ", en: "Tea", ro: "o-cha", type: "h", cat: "food" },
-            { ja: "ごはん", en: "Meal / Rice", ro: "go-han", type: "h", cat: "food" },
-            { ja: "たまご", en: "Egg", ro: "ta-ma-go", type: "h", cat: "food" },
-            { ja: "ケーキ", en: "Cake", ro: "kee-ki", type: "k", cat: "food" },
-            { ja: "コーヒー", en: "Coffee", ro: "koo-hii", type: "k", cat: "food" },
-            { ja: "パン", en: "Bread", ro: "pan", type: "k", cat: "food" },
-            { ja: "ピザ", en: "Pizza", ro: "pi-za", type: "k", cat: "food" },
-            { ja: "かさ", en: "Umbrella", ro: "ka-sa", type: "h", cat: "objects" },
-            { ja: "カメラ", en: "Camera", ro: "ka-me-ra", type: "k", cat: "objects" },
-            { ja: "ホテル", en: "Hotel", ro: "ho-te-ru", type: "k", cat: "travel" },
-            { ja: "えき", en: "Station", ro: "e-ki", type: "h", cat: "travel" },
-            { ja: "くるま", en: "Car", ro: "ku-ru-ma", type: "h", cat: "travel" },
-            { ja: "タクシー", en: "Taxi", ro: "ta-ku-shii", type: "k", cat: "travel" },
-            { ja: "つき", en: "Moon", ro: "tsuki", type: "h", cat: "nature" },
-            { ja: "ほし", en: "Star", ro: "hoshi", type: "h", cat: "nature" },
-            { ja: "とり", en: "Bird", ro: "tori", type: "h", cat: "nature" },
-            { ja: "むし", en: "Insect", ro: "mushi", type: "h", cat: "nature" },
-            { ja: "かぜ", en: "Wind", ro: "kaze", type: "h", cat: "nature" },
-            { ja: "つち", en: "Earth / Soil", ro: "tsuchi", type: "h", cat: "nature" },
-            { ja: "やさい", en: "Vegetables", ro: "yasai", type: "h", cat: "food" },
-            { ja: "おかし", en: "Snack / Sweets", ro: "okashi", type: "h", cat: "food" },
-            { ja: "みかん", en: "Mandarin Orange", ro: "mikan", type: "h", cat: "food" },
-            { ja: "いちご", en: "Strawberry", ro: "ichigo", type: "h", cat: "food" },
-            { ja: "りんご", en: "Apple", ro: "ringo", type: "h", cat: "food" },
-            { ja: "にく", en: "Meat", ro: "niku", type: "h", cat: "food" },
-            { ja: "おさけ", en: "Alcohol / Sake", ro: "osake", type: "h", cat: "food" },
-            { ja: "しお", en: "Salt", ro: "shio", type: "h", cat: "food" },
-            { ja: "さとう", en: "Sugar", ro: "satou", type: "h", cat: "food" },
-            { ja: "ほん", en: "Book", ro: "hon", type: "h", cat: "objects" },
-            { ja: "かばん", en: "Bag", ro: "kaban", type: "h", cat: "objects" },
-            { ja: "とけい", en: "Clock / Watch", ro: "tokei", type: "h", cat: "objects" },
-            { ja: "くつ", en: "Shoes", ro: "kutsu", type: "h", cat: "objects" },
-            { ja: "ふく", en: "Clothes", ro: "fuku", type: "h", cat: "objects" },
-            { ja: "めがね", en: "Glasses", ro: "megane", type: "h", cat: "objects" },
-            { ja: "まど", en: "Window", ro: "mado", type: "h", cat: "objects" },
-            { ja: "いす", en: "Chair", ro: "isu", type: "h", cat: "objects" },
-            { ja: "つくえ", en: "Desk", ro: "tsukue", type: "h", cat: "objects" },
-            { ja: "でんしゃ", en: "Train", ro: "densha", type: "h", cat: "travel" },
-            { ja: "ちず", en: "Map", ro: "chizu", type: "h", cat: "travel" },
-            { ja: "まち", en: "Town", ro: "machi", type: "h", cat: "travel" },
-            { ja: "みち", en: "Road", ro: "michi", type: "h", cat: "travel" },
-            { ja: "おかね", en: "Money", ro: "okane", type: "h", cat: "travel" },
-            { ja: "じてんしゃ", en: "Bicycle", ro: "jitensha", type: "h", cat: "travel" },
-            { ja: "バナナ", en: "Banana", ro: "banana", type: "k", cat: "food" },
-            { ja: "サラダ", en: "Salad", ro: "sarada", type: "k", cat: "food" },
-            { ja: "スープ", en: "Soup", ro: "suupu", type: "k", cat: "food" },
-            { ja: "トマト", en: "Tomato", ro: "tomato", type: "k", cat: "food" },
-            { ja: "ピアノ", en: "Piano", ro: "piano", type: "k", cat: "objects" },
-            { ja: "ズボン", en: "Trousers", ro: "zubon", type: "k", cat: "objects" },
-            { ja: "カレンダー", en: "Calendar", ro: "karendaa", type: "k", cat: "objects" },
-            { ja: "ソファ", en: "Sofa", ro: "sofa", type: "k", cat: "objects" },
-            { ja: "テーブル", en: "Table", ro: "teeburu", type: "k", cat: "objects" },
-            { ja: "デジカメ", en: "Digital Camera", ro: "dejikame", type: "k", cat: "objects" },
-            { ja: "パソコン", en: "Computer", ro: "pasokon", type: "k", cat: "objects" },
-            { ja: "スマホ", en: "Smartphone", ro: "sumaho", type: "k", cat: "objects" },
-            { ja: "インターネット", en: "Internet", ro: "intaanetto", type: "k", cat: "objects" },
-            { ja: "ページ", en: "Page", ro: "peeji", type: "k", cat: "objects" },
-            { ja: "サービス", en: "Service", ro: "saabisu", type: "k", cat: "objects" },
-            { ja: "パーティー", en: "Party", ro: "paatii", type: "k", cat: "travel" },
-            { ja: "ビーチ", en: "Beach", ro: "biichi", type: "k", cat: "travel" },
-            { ja: "エレベーター", en: "Elevator", ro: "erebeetaa", type: "k", cat: "objects" },
-            { ja: "エスカレーター", en: "Escalator", ro: "esukareetaa", type: "k", cat: "objects" },
-            { ja: "コンビニ", en: "Convenience Store", ro: "konbini", type: "k", cat: "travel" },
-            { ja: "スーパー", en: "Supermarket", ro: "suupaa", type: "k", cat: "travel" },
-            { ja: "バイク", en: "Motorcycle", ro: "baiku", type: "k", cat: "travel" },
-            { ja: "トラック", en: "Truck", ro: "torakku", type: "k", cat: "travel" },
-            { ja: "エンジン", en: "Engine", ro: "enjin", type: "k", cat: "objects" },
-            { ja: "キャンプ", en: "Camping", ro: "kyanpu", type: "k", cat: "travel" },
-            { ja: "ハイキング", en: "Hiking", ro: "haikingu", type: "k", cat: "travel" },
-            { ja: "マフラー", en: "Scarf", ro: "mafuraa", type: "k", cat: "objects" },
-            { ja: "コート", en: "Coat", ro: "kooto", type: "k", cat: "objects" },
-            { ja: "ベルト", en: "Belt", ro: "beruto", type: "k", cat: "objects" },
-            { ja: "バッグ", en: "Bag", ro: "baggu", type: "k", cat: "objects" }
+            { ja: "やま", en: "Mountain", ro: "yama", type: "h", cat: "nature" }, { ja: "うみ", en: "Sea", ro: "umi", type: "h", cat: "nature" },
+            { ja: "そら", en: "Sky", ro: "sora", type: "h", cat: "nature" }, { ja: "かわ", en: "River", ro: "kawa", type: "h", cat: "nature" },
+            { ja: "き", en: "Tree", ro: "ki", type: "h", cat: "nature" }, { ja: "はな", en: "Flower", ro: "ha-na", type: "h", cat: "nature" },
+            { ja: "ゆき", en: "Snow", ro: "yu-ki", type: "h", cat: "nature" }, { ja: "みず", en: "Water", ro: "mi-zu", type: "h", cat: "nature" },
+            { ja: "すし", en: "Sushi", ro: "su-shi", type: "h", cat: "food" }, { ja: "おちゃ", en: "Tea", ro: "o-cha", type: "h", cat: "food" },
+            { ja: "ごはん", en: "Meal / Rice", ro: "go-han", type: "h", cat: "food" }, { ja: "たまご", en: "Egg", ro: "ta-ma-go", type: "h", cat: "food" },
+            { ja: "ケーキ", en: "Cake", ro: "kee-ki", type: "k", cat: "food" }, { ja: "コーヒー", en: "Coffee", ro: "koo-hii", type: "k", cat: "food" },
+            { ja: "パン", en: "Bread", ro: "pan", type: "k", cat: "food" }, { ja: "ピザ", en: "Pizza", ro: "pi-za", type: "k", cat: "food" },
+            { ja: "かさ", en: "Umbrella", ro: "ka-sa", type: "h", cat: "objects" }, { ja: "カメラ", en: "Camera", ro: "ka-me-ra", type: "k", cat: "objects" },
+            { ja: "ホテル", en: "Hotel", ro: "ho-te-ru", type: "k", cat: "travel" }, { ja: "えき", en: "Station", ro: "e-ki", type: "h", cat: "travel" },
+            { ja: "くるま", en: "Car", ro: "ku-ru-ma", type: "h", cat: "travel" }, { ja: "タクシー", en: "Taxi", ro: "ta-ku-shii", type: "k", cat: "travel" },
+            { ja: "つき", en: "Moon", ro: "tsuki", type: "h", cat: "nature" }, { ja: "ほし", en: "Star", ro: "hoshi", type: "h", cat: "nature" },
+            { ja: "とり", en: "Bird", ro: "tori", type: "h", cat: "nature" }, { ja: "むし", en: "Insect", ro: "mushi", type: "h", cat: "nature" },
+            { ja: "かぜ", en: "Wind", ro: "kaze", type: "h", cat: "nature" }, { ja: "つち", en: "Earth / Soil", ro: "tsuchi", type: "h", cat: "nature" },
+            { ja: "やさい", en: "Vegetables", ro: "yasai", type: "h", cat: "food" }, { ja: "おかし", en: "Snack / Sweets", ro: "okashi", type: "h", cat: "food" },
+            { ja: "みかん", en: "Mandarin Orange", ro: "mikan", type: "h", cat: "food" }, { ja: "いちご", en: "Strawberry", ro: "ichigo", type: "h", cat: "food" },
+            { ja: "りんご", en: "Apple", ro: "ringo", type: "h", cat: "food" }, { ja: "にく", en: "Meat", ro: "niku", type: "h", cat: "food" },
+            { ja: "おさけ", en: "Alcohol / Sake", ro: "osake", type: "h", cat: "food" }, { ja: "しお", en: "Salt", ro: "shio", type: "h", cat: "food" },
+            { ja: "さとう", en: "Sugar", ro: "satou", type: "h", cat: "food" }, { ja: "ほん", en: "Book", ro: "hon", type: "h", cat: "objects" },
+            { ja: "かばん", en: "Bag", ro: "kaban", type: "h", cat: "objects" }, { ja: "とけい", en: "Clock / Watch", ro: "tokei", type: "h", cat: "objects" },
+            { ja: "くつ", en: "Shoes", ro: "kutsu", type: "h", cat: "objects" }, { ja: "ふく", en: "Clothes", ro: "fuku", type: "h", cat: "objects" },
+            { ja: "めがね", en: "Glasses", ro: "megane", type: "h", cat: "objects" }, { ja: "まど", en: "Window", ro: "mado", type: "h", cat: "objects" },
+            { ja: "いす", en: "Chair", ro: "isu", type: "h", cat: "objects" }, { ja: "つくえ", en: "Desk", ro: "tsukue", type: "h", cat: "objects" },
+            { ja: "でんしゃ", en: "Train", ro: "densha", type: "h", cat: "travel" }, { ja: "ちず", en: "Map", ro: "chizu", type: "h", cat: "travel" },
+            { ja: "まち", en: "Town", ro: "machi", type: "h", cat: "travel" }, { ja: "みち", en: "Road", ro: "michi", type: "h", cat: "travel" },
+            { ja: "おかね", en: "Money", ro: "okane", type: "h", cat: "travel" }, { ja: "じてんしゃ", en: "Bicycle", ro: "jitensha", type: "h", cat: "travel" },
+            { ja: "バナナ", en: "Banana", ro: "banana", type: "k", cat: "food" }, { ja: "サラダ", en: "Salad", ro: "sarada", type: "k", cat: "food" },
+            { ja: "スープ", en: "Soup", ro: "suupu", type: "k", cat: "food" }, { ja: "トマト", en: "Tomato", ro: "tomato", type: "k", cat: "food" },
+            { ja: "ピアノ", en: "Piano", ro: "piano", type: "k", cat: "objects" }, { ja: "ズボン", en: "Trousers", ro: "zubon", type: "k", cat: "objects" },
+            { ja: "カレンダー", en: "Calendar", ro: "karendaa", type: "k", cat: "objects" }, { ja: "ソファ", en: "Sofa", ro: "sofa", type: "k", cat: "objects" },
+            { ja: "テーブル", en: "Table", ro: "teeburu", type: "k", cat: "objects" }, { ja: "デジカメ", en: "Digital Camera", ro: "dejikame", type: "k", cat: "objects" },
+            { ja: "パソコン", en: "Computer", ro: "pasokon", type: "k", cat: "objects" }, { ja: "スマホ", en: "Smartphone", ro: "sumaho", type: "k", cat: "objects" },
+            { ja: "インターネット", en: "Internet", ro: "intaanetto", type: "k", cat: "objects" }, { ja: "ページ", en: "Page", ro: "peeji", type: "k", cat: "objects" },
+            { ja: "サービス", en: "Service", ro: "saabisu", type: "k", cat: "objects" }, { ja: "パーティー", en: "Party", ro: "paatii", type: "k", cat: "travel" },
+            { ja: "ビーチ", en: "Beach", ro: "biichi", type: "k", cat: "travel" }, { ja: "エレベーター", en: "Elevator", ro: "erebeetaa", type: "k", cat: "objects" },
+            { ja: "エスカレーター", en: "Escalator", ro: "esukareetaa", type: "k", cat: "objects" }, { ja: "コンビニ", en: "Convenience Store", ro: "konbini", type: "k", cat: "travel" },
+            { ja: "スーパー", en: "Supermarket", ro: "suupaa", type: "k", cat: "travel" }, { ja: "バイク", en: "Motorcycle", ro: "baiku", type: "k", cat: "travel" },
+            { ja: "トラック", en: "Truck", ro: "torakku", type: "k", cat: "travel" }, { ja: "エンジン", en: "Engine", ro: "enjin", type: "k", cat: "objects" },
+            { ja: "キャンプ", en: "Camping", ro: "kyanpu", type: "k", cat: "travel" }, { ja: "ハイキング", en: "Hiking", ro: "haikingu", type: "k", cat: "travel" },
+            { ja: "マフラー", en: "Scarf", ro: "mafuraa", type: "k", cat: "objects" }, { ja: "コート", en: "Coat", ro: "kooto", type: "k", cat: "objects" },
+            { ja: "ベルト", en: "Belt", ro: "beruto", type: "k", cat: "objects" }, { ja: "バッグ", en: "Bag", ro: "baggu", type: "k", cat: "objects" }
         ];
 
         let state = { filter: 'h', currentDeck: [], index: 0, stats: { c: 0, f: 0, idk: 0 }, misses: {}, flipped: false, busy: false, round: 1, mode: 'normal', editingKey: null };
@@ -436,14 +403,22 @@
             localStorage.setItem('jp_last_date', data.lastDate || '');
             localStorage.setItem('jp_settings', JSON.stringify(data.settings || settings));
             updateHubStats();
+            populateCategoryDropdowns();
         }
 
         function getAllWords() {
             const db = getDatabase();
             const combined = [...FACTORY_DATA, ...db.custom];
-            return combined.filter(w => !db.hidden.includes(w.ja)).map(w => {
-                return db.overrides[w.ja] ? { ...w, ...db.overrides[w.ja] } : w;
-            });
+            return combined.filter(w => !db.hidden.includes(w.ja)).map(w => db.overrides[w.ja] ? { ...w, ...db.overrides[w.ja] } : w);
+        }
+
+        function populateCategoryDropdowns() {
+            const allWords = getAllWords();
+            const cats = [...new Set(allWords.map(w => w.cat || 'objects'))].sort();
+            const hubSelect = document.getElementById('cat-select');
+            const editSelect = document.getElementById('edit-cat');
+            if(hubSelect) hubSelect.innerHTML = `<option value="all">All Categories</option>` + cats.map(c => `<option value="${c}">${c.charAt(0).toUpperCase() + c.slice(1)}</option>`).join('');
+            if(editSelect) editSelect.innerHTML = cats.map(c => `<option value="${c}">${c.charAt(0).toUpperCase() + c.slice(1)}</option>`).join('');
         }
 
         function updateHubStats() {
@@ -457,7 +432,6 @@
             const elStreak = document.getElementById('streak-count');
             if (elStreak) elStreak.innerText = `🔥 ${db.streak} Day Streak`;
             
-            // Sync Filter Buttons
             ['h', 'k', 'both'].forEach(t => {
                 const el = document.getElementById(`f-${t}`);
                 if (el) el.className = (t === state.filter) ? 'px-3 py-1 text-[10px] font-bold rounded-md transition-all bg-white text-emerald-600 shadow-sm' : 'px-3 py-1 text-[10px] font-bold rounded-md transition-all text-slate-500';
@@ -488,14 +462,22 @@
             if(v === 'menu') updateHubStats();
             if(v === 'db') populateVoices();
             document.querySelector('.view-container').scrollTop = 0;
+            // Ensure scroll button is hidden when leaving library
+            if(v !== 'library') document.getElementById('btn-scroll-top').classList.add('hidden');
+        }
+
+        function scrollToTop() {
+            document.querySelector('.view-container').scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function toggleListeningMode() { settings.listening = !settings.listening; updateHubStats(); saveDatabase(getDatabase()); }
 
         function startGame(mode) {
             const db = getDatabase();
-            const cat = document.getElementById('cat-select').value;
-            const size = parseInt(document.getElementById('size-select').value);
+            const catSelect = document.getElementById('cat-select');
+            const cat = catSelect ? catSelect.value : 'all';
+            const sizeSelect = document.getElementById('size-select');
+            const size = sizeSelect ? parseInt(sizeSelect.value) : 15;
             let allWords = getAllWords();
             let pool = allWords.filter(i => state.filter === 'both' || i.type === state.filter);
             if(cat !== 'all') pool = pool.filter(i => i.cat === cat);
@@ -504,19 +486,12 @@
                 pool = pool.filter(i => (db.mastery[i.ja]?.lvl || 0) < 3);
                 if(pool.length === 0) return alert("All words in this filter are mastered!");
                 state.mode = 'smart';
-                const elMode = document.getElementById('game-mode-label');
-                if (elMode) elMode.innerText = "SMART REVIEW";
+                document.getElementById('game-mode-label').innerText = "SMART REVIEW";
             } else {
-                pool.sort((a, b) => {
-                    const ma = db.mastery[a.ja] || { seenCount: 0, lastSeen: 0 };
-                    const mb = db.mastery[b.ja] || { seenCount: 0, lastSeen: 0 };
-                    if (ma.seenCount !== mb.seenCount) return ma.seenCount - mb.seenCount;
-                    return ma.lastSeen - mb.lastSeen;
-                });
+                pool.sort((a, b) => (db.mastery[a.ja]?.seenCount || 0) - (db.mastery[b.ja]?.seenCount || 0));
                 pool = pool.slice(0, size * 2).sort(() => Math.random() - 0.5);
                 state.mode = 'normal';
-                const elMode = document.getElementById('game-mode-label');
-                if (elMode) elMode.innerText = `${cat.toUpperCase()} LESSON`;
+                document.getElementById('game-mode-label').innerText = `${cat.toUpperCase()} LESSON`;
             }
             state.currentDeck = pool.slice(0, size);
             state.index = 0; state.stats = { c: 0, f: 0, idk: 0 }; state.misses = {}; state.round = 1;
@@ -538,8 +513,7 @@
         function handleIDK(event) {
             event.stopPropagation();
             if(state.flipped || state.busy) return;
-            state.flipped = true;
-            state.stats.idk++;
+            state.flipped = true; state.stats.idk++;
             document.getElementById('card').classList.add('flip-card-flipped');
             document.getElementById('game-controls').classList.remove('opacity-0', 'pointer-events-none');
             document.getElementById('btn-wrong').classList.add('hidden');
@@ -559,8 +533,7 @@
                 updateWordMastery(word.ja, false);
             }
             state.index++;
-            if(state.index >= state.currentDeck.length) finishSession();
-            else updateDisplay(true);
+            if(state.index >= state.currentDeck.length) finishSession(); else updateDisplay(true);
         }
 
         function updateDisplay(delay) {
@@ -587,13 +560,9 @@
                         if(elRepeat) elRepeat.classList.add('hidden');
                         if(elHint) elHint.innerText = "Click to Flip";
                     }
-                    const elEn = document.getElementById('card-en');
-                    const elRo = document.getElementById('card-ro');
-                    const elCat = document.getElementById('card-cat-tag');
-                    if(elEn) elEn.innerText = word.en;
-                    if(elRo) elRo.innerText = word.ro;
-                    if(elCat) elCat.innerText = (word.cat || 'OBJECTS').toUpperCase();
-                    
+                    document.getElementById('card-en').innerText = word.en;
+                    document.getElementById('card-ro').innerText = word.ro;
+                    document.getElementById('card-cat-tag').innerText = (word.cat || 'OBJECTS').toUpperCase();
                     document.getElementById('game-round').innerText = `Word ${state.index + 1} of ${state.currentDeck.length}`;
                     document.getElementById('game-progress').style.width = `${(state.index / state.currentDeck.length) * 100}%`;
                 }
@@ -622,16 +591,14 @@
             let removedCount = 0;
             db.custom.forEach(w => {
                 const key = `${w.ja}_${w.type}`;
-                if (factoryKeys.has(key) || seenCustom.has(key)) { removedCount++; } 
+                if (factoryKeys.has(key) || seenCustom.has(key)) removedCount++;
                 else { seenCustom.add(key); toKeep.push(w); }
             });
             if (removedCount > 0) {
-                if (confirm(`Found ${removedCount} duplicate words. Keep only one instance of each?`)) {
-                    db.custom = toKeep;
-                    saveDatabase(db);
-                    renderLibrary();
+                if (confirm(`Found ${removedCount} duplicates. Keep only one instance of each?`)) {
+                    db.custom = toKeep; saveDatabase(db); renderLibrary();
                 }
-            } else { alert("No duplicate words found."); }
+            } else alert("No duplicates found.");
         }
 
         function renderLibrary() {
@@ -640,46 +607,36 @@
             const search = searchEl ? searchEl.value.toLowerCase() : "";
             const allWords = getAllWords();
             const filtered = allWords.filter(w => w.ja.includes(search) || w.en.toLowerCase().includes(search) || (w.ro && w.ro.toLowerCase().includes(search)));
-            document.getElementById('lib-count').innerText = `${filtered.length} Words Found`;
+            const elCount = document.getElementById('lib-count');
+            if(elCount) elCount.innerText = `${filtered.length} Words Found`;
             const grid = document.getElementById('lib-grid');
-            grid.innerHTML = filtered.map(w => {
-                const m = db.mastery[w.ja] || { lvl: 0, seenCount: 0 };
-                return `<div class="bg-white p-4 rounded-3xl border shadow-sm text-center relative hover:border-emerald-300 transition-all group">
-                    <div class="flex justify-between items-center mb-2 px-1">
-                        <button onclick="openEditModal('${w.ja}')" class="text-slate-300 hover:text-indigo-500 p-1 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg></button>
-                        <button onclick="deleteWord('${w.ja}')" class="text-slate-300 hover:text-rose-500 p-1 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button>
-                    </div>
-                    <div onclick="speak('${w.ja}')" class="cursor-pointer active:scale-95 transition-transform">
-                        <span class="text-[7px] font-bold text-slate-300 uppercase tracking-widest">${(w.cat || 'OBJECTS').toUpperCase()}</span>
-                        <h4 class="text-2xl font-bold text-slate-800 my-1">${w.ja}</h4>
-                        <p class="text-[10px] text-slate-400 font-medium">${w.en}</p>
-                        <div class="text-[7px] font-bold text-slate-300 mt-2">Seen ${m.seenCount}</div>
-                        <div class="flex justify-center gap-0.5 mt-1">${Array(5).fill(0).map((_,i) => `<div class="w-1 h-1 rounded-full ${i < m.lvl ? 'bg-emerald-500' : 'bg-slate-200'}"></div>`).join('')}</div>
-                    </div>
-                </div>`;
-            }).join('');
-        }
-
-        function deleteWord(ja) {
-            if(confirm(`Hide/Delete "${ja}"?`)) {
-                const db = getDatabase();
-                db.custom = db.custom.filter(w => w.ja !== ja);
-                if(!db.hidden.includes(ja)) db.hidden.push(ja);
-                saveDatabase(db);
-                renderLibrary();
+            if(grid) {
+                grid.innerHTML = filtered.map(w => {
+                    const m = db.mastery[w.ja] || { lvl: 0, seenCount: 0 };
+                    return `<div class="bg-white p-4 rounded-3xl border shadow-sm text-center relative hover:border-emerald-300 transition-all group">
+                        <div class="flex justify-between items-center mb-2 px-1">
+                            <button onclick="openEditModal('${w.ja}')" class="text-slate-300 hover:text-indigo-500 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2(0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg></button>
+                            <button onclick="deleteWord('${w.ja}')" class="text-slate-300 hover:text-rose-500 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2(0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button>
+                        </div>
+                        <div onclick="speak('${w.ja}')" class="cursor-pointer active:scale-95 transition-transform">
+                            <span class="text-[7px] font-bold text-slate-300 uppercase tracking-widest">${(w.cat || 'OBJECTS').toUpperCase()}</span>
+                            <h4 class="text-2xl font-bold text-slate-800 my-1 text-center">${w.ja}</h4>
+                            <p class="text-[10px] text-slate-400 font-medium text-center">${w.en}</p>
+                            <div class="text-[7px] font-bold text-slate-300 mt-2 text-center">Seen ${m.seenCount}</div>
+                            <div class="flex justify-center gap-0.5 mt-1">${Array(5).fill(0).map((_,i) => `<div class="w-1 h-1 rounded-full ${i < m.lvl ? 'bg-emerald-500' : 'bg-slate-200'}"></div>`).join('')}</div>
+                        </div>
+                    </div>`;
+                }).join('');
             }
         }
 
+        function deleteWord(ja) { if(confirm(`Hide/Delete "${ja}"?`)) { const db = getDatabase(); db.custom = db.custom.filter(w => w.ja !== ja); if(!db.hidden.includes(ja)) db.hidden.push(ja); saveDatabase(db); renderLibrary(); } }
+        
         function openEditModal(ja) {
-            const all = getAllWords();
-            const word = all.find(w => w.ja === ja);
-            if(!word) return;
-            state.editingKey = ja;
-            document.getElementById('edit-ja').value = word.ja;
-            document.getElementById('edit-en').value = word.en;
-            document.getElementById('edit-ro').value = word.ro || "";
-            document.getElementById('edit-type').value = word.type;
-            document.getElementById('edit-cat').value = word.cat || "objects";
+            const all = getAllWords(); const word = all.find(w => w.ja === ja); if(!word) return;
+            state.editingKey = ja; document.getElementById('edit-ja').value = word.ja;
+            document.getElementById('edit-en').value = word.en; document.getElementById('edit-ro').value = word.ro || "";
+            document.getElementById('edit-type').value = word.type; document.getElementById('edit-cat').value = word.cat || "objects";
             document.getElementById('edit-modal').classList.remove('hidden');
         }
 
@@ -690,14 +647,11 @@
                 en: document.getElementById('edit-en').value.trim(),
                 ro: document.getElementById('edit-ro').value.trim(),
                 type: document.getElementById('edit-type').value,
-                cat: document.getElementById('edit-cat').value
+                cat: document.getElementById('edit-cat').value.toLowerCase()
             };
             const customIdx = db.custom.findIndex(w => w.ja === state.editingKey);
-            if(customIdx > -1) { db.custom[customIdx] = newWord; }
-            else { db.overrides[state.editingKey] = newWord; }
-            saveDatabase(db);
-            closeEditModal();
-            renderLibrary();
+            if(customIdx > -1) db.custom[customIdx] = newWord; else db.overrides[state.editingKey] = newWord;
+            saveDatabase(db); closeEditModal(); renderLibrary();
         }
 
         function closeEditModal() { document.getElementById('edit-modal').classList.add('hidden'); state.editingKey = null; }
@@ -708,24 +662,29 @@
             Object.values(db.mastery).forEach(m => { if (m.lvl >= 0 && m.lvl <= 5) masteryCounts[m.lvl]++; });
             const maxVal = Math.max(...masteryCounts, 1);
             const chart = document.getElementById('analytics-chart');
-            chart.innerHTML = masteryCounts.map((count, i) => {
-                const h = (count / maxVal) * 100;
-                return `<div class="flex-1 flex flex-col items-center">
-                    <span class="text-[8px] font-bold text-slate-400 mb-1">${count}</span>
-                    <div class="w-full bg-emerald-100 rounded-t-lg mastery-bar overflow-hidden flex items-end shadow-inner" style="height: ${h}%">
-                        <div class="w-full bg-emerald-500" style="height: 100%"></div>
-                    </div>
-                </div>`;
-            }).join('');
-            document.getElementById('history-list').innerHTML = db.history.slice(0,10).map(h => `
-                <div class="bg-slate-50 p-4 rounded-2xl flex justify-between items-center border border-slate-100">
-                    <div class="flex flex-col"><span class="text-[8px] font-bold text-slate-300 uppercase tracking-widest">${new Date(h.date).toLocaleDateString()}</span><p class="font-bold text-slate-700 text-xs">${h.mode === 'smart' ? 'Smart Review' : 'Lesson'}</p></div>
-                    <div class="flex gap-1.5 text-[9px] font-bold">
-                        <span class="text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg">✓ ${h.c}</span>
-                        <span class="text-rose-400 bg-rose-50 px-2 py-0.5 rounded-lg">✗ ${h.f}</span>
-                        <span class="text-amber-600 bg-amber-50 px-2 py-0.5 rounded-lg">🤷 ${h.idk || 0}</span>
-                    </div>
-                </div>`).join('');
+            if(chart) {
+                chart.innerHTML = masteryCounts.map((count, i) => {
+                    const h = (count / maxVal) * 100;
+                    return `<div class="flex-1 flex flex-col items-center">
+                        <span class="text-[8px] font-bold text-slate-400 mb-1">${count}</span>
+                        <div class="w-full bg-emerald-100 rounded-t-lg mastery-bar overflow-hidden flex items-end shadow-inner" style="height: ${h}%">
+                            <div class="w-full bg-emerald-500" style="height: 100%"></div>
+                        </div>
+                    </div>`;
+                }).join('');
+            }
+            const histList = document.getElementById('history-list');
+            if(histList) {
+                histList.innerHTML = db.history.slice(0,10).map(h => `
+                    <div class="bg-slate-50 p-4 rounded-2xl flex justify-between items-center border border-slate-100 text-left">
+                        <div class="flex flex-col"><span class="text-[8px] font-bold text-slate-300 uppercase tracking-widest text-left">${new Date(h.date).toLocaleDateString()}</span><p class="font-bold text-slate-700 text-xs text-left">${h.mode === 'smart' ? 'Smart Review' : 'Lesson'}</p></div>
+                        <div class="flex gap-1.5 text-[9px] font-bold">
+                            <span class="text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg">✓ ${h.c}</span>
+                            <span class="text-rose-400 bg-rose-50 px-2 py-0.5 rounded-lg">✗ ${h.f}</span>
+                            <span class="text-amber-600 bg-amber-50 px-2 py-0.5 rounded-lg">🤷 ${h.idk || 0}</span>
+                        </div>
+                    </div>`).join('');
+            }
         }
 
         function processImport() {
@@ -739,22 +698,15 @@
                 const p = line.split(',').map(s => s.trim());
                 if(p.length >= 4) {
                     const [ja, en, ro, type, cat] = p;
-                    if(!existing.includes(ja)) {
-                        db.custom.push({ ja, en, ro, type, cat: cat || 'objects' });
-                        existing.push(ja);
-                    }
+                    if(!existing.includes(ja)) db.custom.push({ ja, en, ro, type, cat: (cat || 'objects').toLowerCase() });
                 }
             });
-            saveDatabase(db);
-            if (textEl) textEl.value = '';
-            changeView('menu');
+            saveDatabase(db); if (textEl) textEl.value = ''; changeView('menu');
         }
 
         function updateWordMastery(ja, win) {
-            const db = getDatabase();
-            if(!db.mastery[ja]) db.mastery[ja] = { win: 0, lose: 0, lvl: 0, seenCount: 0, lastSeen: 0, idkCount: 0 };
-            db.mastery[ja].seenCount++;
-            db.mastery[ja].lastSeen = Date.now();
+            const db = getDatabase(); if(!db.mastery[ja]) db.mastery[ja] = { win: 0, lose: 0, lvl: 0, seenCount: 0, lastSeen: 0, idkCount: 0 };
+            db.mastery[ja].seenCount++; db.mastery[ja].lastSeen = Date.now();
             if(win) db.mastery[ja].win++; else db.mastery[ja].lose++;
             db.mastery[ja].lvl = Math.min(5, Math.max(0, db.mastery[ja].win - (db.mastery[ja].lose * 2)));
             saveDatabase(db);
@@ -762,54 +714,44 @@
 
         function setFilter(f) { state.filter = f; updateHubStats(); saveDatabase(getDatabase()); }
         function populateVoices() {
-            const select = document.getElementById('voice-select');
-            if(!select) return;
+            const select = document.getElementById('voice-select'); if(!select) return;
             const voices = window.speechSynthesis.getVoices().filter(v => v.lang.startsWith('ja'));
             select.innerHTML = voices.map(v => `<option value="${v.name}" ${settings.selectedVoice === v.name ? 'selected' : ''}>${v.name}</option>`).join('');
         }
-        function saveVoicePreference() { settings.selectedVoice = document.getElementById('voice-select').value; saveDatabase(getDatabase()); speak("はじめまして"); }
+        function saveVoicePreference() { settings.selectedVoice = document.getElementById('voice-select').value; saveDatabase(getDatabase()); }
         function speak(text) {
-            if(!settings.audio || !('speechSynthesis' in window)) return;
-            window.speechSynthesis.cancel();
-            const u = new SpeechSynthesisUtterance(text);
-            u.lang = 'ja-JP'; u.rate = settings.speed;
+            if(!settings.audio) return; window.speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(text); u.lang = 'ja-JP'; u.rate = settings.speed;
             const voices = window.speechSynthesis.getVoices();
             const preferred = voices.find(v => v.name === settings.selectedVoice);
-            if (preferred) u.voice = preferred;
-            window.speechSynthesis.speak(u);
+            if (preferred) u.voice = preferred; window.speechSynthesis.speak(u);
         }
         function speakCurrent(e) { if(e) e.stopPropagation(); speak(state.currentDeck[state.index]?.ja); }
         function toggleAudio() { settings.audio = !settings.audio; updateHubStats(); saveDatabase(getDatabase()); }
         function toggleSpeed() { settings.speed = settings.speed === 0.9 ? 0.6 : 0.9; updateHubStats(); saveDatabase(getDatabase()); }
-        function exportJSON() {
-            const blob = new Blob([JSON.stringify(getDatabase(), null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a'); a.href = url; a.download = `Japanese_Hub_DB.json`; a.click();
-        }
-        function importJSON(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const data = JSON.parse(e.target.result);
-                    if (data.mastery || data.custom) { saveDatabase(data); location.reload(); }
-                } catch (err) { alert("Error reading file."); }
-            };
-            reader.readAsText(file);
-        }
+        function exportJSON() { const blob = new Blob([JSON.stringify(getDatabase(), null, 2)], { type: 'application/json' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `Japanese_Hub_DB.json`; a.click(); }
+        function importJSON(event) { const file = event.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = function(e) { try { const data = JSON.parse(e.target.result); if (data.mastery || data.custom) { saveDatabase(data); location.reload(); } } catch (err) { alert("Error reading file."); } }; reader.readAsText(file); }
         function clearDatabase() { if(confirm("PERMANENTLY reset all data?")) { localStorage.clear(); location.reload(); } }
         window.showQuitModal = () => document.getElementById('quit-modal').classList.remove('hidden');
         window.hideQuitModal = () => document.getElementById('quit-modal').classList.add('hidden');
         window.quitGameNow = () => { hideQuitModal(); changeView('menu'); };
 
         document.addEventListener('DOMContentLoaded', () => { 
-            const db = getDatabase();
-            settings = {...settings, ...db.settings};
-            updateHubStats(); 
-            setFilter(state.filter);
-            window.speechSynthesis.onvoiceschanged = populateVoices;
-            populateVoices();
+            const db = getDatabase(); settings = {...settings, ...db.settings};
+            populateCategoryDropdowns(); updateHubStats(); setFilter(state.filter);
+            window.speechSynthesis.onvoiceschanged = populateVoices; populateVoices();
+            
+            // Fixed Scroll Listener - attaches to the view-container
+            document.querySelector('.view-container').addEventListener('scroll', (e) => {
+                const btn = document.getElementById('btn-scroll-top');
+                const isLibrary = !document.getElementById('view-library').classList.contains('hidden');
+                // Show button if scrolled down > 200px and we are in library
+                if (isLibrary && e.target.scrollTop > 200) {
+                    btn.classList.remove('hidden');
+                } else {
+                    btn.classList.add('hidden');
+                }
+            });
         });
     </script>
 </body>
