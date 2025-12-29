@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Japanese Learning Hub | Pro Edition</title>
+    <!-- Favicon fix to stop 404 errors -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
@@ -190,7 +191,7 @@
                                 <h2 id="card-en" class="text-4xl font-bold mb-2 text-center">...</h2>
                                 <p id="card-ro" class="text-xl opacity-70 italic font-medium mb-8">...</p>
                                 <button onclick="speakCurrent(event)" class="p-4 bg-white/20 rounded-full hover:bg-white/30 active:scale-90 transition-all">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1(0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
                                 </button>
                             </div>
                         </div>
@@ -200,6 +201,18 @@
                         <button id="btn-wrong" onclick="handleResult(false)" class="flex-1 bg-white border-2 border-rose-100 text-rose-500 font-bold py-5 rounded-[2.2rem] shadow-sm active:scale-95 transition-all text-sm">WRONG</button>
                         <button id="btn-correct" onclick="handleResult(true)" class="flex-1 bg-emerald-600 text-white font-bold py-5 rounded-[2.2rem] shadow-lg active:scale-95 transition-all text-sm">CORRECT</button>
                         <button id="btn-idk-next" onclick="handleResult(false)" class="hidden flex-1 bg-amber-500 text-white font-bold py-5 rounded-[2.2rem] shadow-lg active:scale-95 transition-all">Next Word</button>
+                    </div>
+                </div>
+
+                <!-- QUIT MODAL -->
+                <div id="quit-modal" class="hidden absolute inset-0 z-[100] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-8 text-center">
+                    <div class="bg-white rounded-[2.5rem] p-8 w-full max-w-[320px] scale-in shadow-2xl">
+                        <h3 class="text-xl font-bold mb-2 text-slate-800 tracking-tight">Quit Session?</h3>
+                        <p class="text-slate-400 mb-8 text-sm">Your round progress will not be saved.</p>
+                        <div class="flex flex-col gap-3">
+                            <button onclick="quitGameNow()" class="w-full bg-rose-50 text-white font-bold py-3.5 rounded-2xl hover:bg-rose-600 transition-all shadow-md">Yes, Quit</button>
+                            <button onclick="hideQuitModal()" class="w-full bg-slate-100 text-slate-600 font-bold py-3.5 rounded-2xl hover:bg-slate-200 transition-all">Cancel</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -280,7 +293,6 @@
             </div>
         </div>
 
-        <!-- SHARED MODALS -->
         <!-- EDIT MODAL -->
         <div id="edit-modal" class="hidden absolute inset-0 z-[110] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-6">
             <div class="bg-white rounded-[2rem] p-6 w-full max-w-[350px] scale-in shadow-2xl space-y-4">
@@ -305,18 +317,6 @@
                 <div class="flex flex-col gap-2 pt-2">
                     <button onclick="saveEdit()" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl">Save Changes</button>
                     <button onclick="closeEditModal()" class="w-full bg-slate-100 text-slate-500 font-bold py-2 rounded-xl text-xs">Cancel</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- QUIT MODAL -->
-        <div id="quit-modal" class="hidden absolute inset-0 z-[100] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-8 text-center">
-            <div class="bg-white rounded-[2.5rem] p-8 w-full max-w-[320px] scale-in shadow-2xl">
-                <h3 class="text-xl font-bold mb-2 text-slate-800 tracking-tight">Quit Session?</h3>
-                <p class="text-slate-400 mb-8 text-sm">Your round progress will not be saved.</p>
-                <div class="flex flex-col gap-3">
-                    <button onclick="quitGameNow()" class="w-full bg-rose-50 text-white font-bold py-3.5 rounded-2xl hover:bg-rose-600 transition-all shadow-md">Yes, Quit</button>
-                    <button onclick="hideQuitModal()" class="w-full bg-slate-100 text-slate-600 font-bold py-3.5 rounded-2xl hover:bg-slate-200 transition-all">Cancel</button>
                 </div>
             </div>
         </div>
@@ -395,7 +395,7 @@
             { ja: "ビーチ", en: "Beach", ro: "biichi", type: "k", cat: "travel" },
             { ja: "エレベーター", en: "Elevator", ro: "erebeetaa", type: "k", cat: "objects" },
             { ja: "エスカレーター", en: "Escalator", ro: "esukareetaa", type: "k", cat: "objects" },
-            { ja: "コンビニ", en: "Convenience Store", konbini: "k", type: "k", cat: "travel" },
+            { ja: "コンビニ", en: "Convenience Store", ro: "konbini", type: "k", cat: "travel" },
             { ja: "スーパー", en: "Supermarket", ro: "suupaa", type: "k", cat: "travel" },
             { ja: "バイク", en: "Motorcycle", ro: "baiku", type: "k", cat: "travel" },
             { ja: "トラック", en: "Truck", ro: "torakku", type: "k", cat: "travel" },
@@ -427,13 +427,13 @@
         }
 
         function saveDatabase(data) {
-            localStorage.setItem('jp_mastery', JSON.stringify(data.mastery));
-            localStorage.setItem('jp_history', JSON.stringify(data.history));
-            localStorage.setItem('jp_custom', JSON.stringify(data.custom));
-            localStorage.setItem('jp_overrides', JSON.stringify(data.overrides));
-            localStorage.setItem('jp_hidden', JSON.stringify(data.hidden));
-            localStorage.setItem('jp_streak', data.streak.toString());
-            localStorage.setItem('jp_last_date', data.lastDate);
+            localStorage.setItem('jp_mastery', JSON.stringify(data.mastery || {}));
+            localStorage.setItem('jp_history', JSON.stringify(data.history || []));
+            localStorage.setItem('jp_custom', JSON.stringify(data.custom || []));
+            localStorage.setItem('jp_overrides', JSON.stringify(data.overrides || {}));
+            localStorage.setItem('jp_hidden', JSON.stringify(data.hidden || []));
+            localStorage.setItem('jp_streak', (data.streak || 0).toString());
+            localStorage.setItem('jp_last_date', data.lastDate || '');
             localStorage.setItem('jp_settings', JSON.stringify(data.settings || settings));
             updateHubStats();
         }
@@ -456,6 +456,13 @@
             if (elMastery) elMastery.innerText = `${Math.round((masteries / all.length) * 100) || 0}% Mastered`;
             const elStreak = document.getElementById('streak-count');
             if (elStreak) elStreak.innerText = `🔥 ${db.streak} Day Streak`;
+            
+            // Sync Filter Buttons
+            ['h', 'k', 'both'].forEach(t => {
+                const el = document.getElementById(`f-${t}`);
+                if (el) el.className = (t === state.filter) ? 'px-3 py-1 text-[10px] font-bold rounded-md transition-all bg-white text-emerald-600 shadow-sm' : 'px-3 py-1 text-[10px] font-bold rounded-md transition-all text-slate-500';
+            });
+
             const btnAudio = document.getElementById('btn-audio');
             if (btnAudio) {
                 btnAudio.innerText = settings.audio ? 'Audio: ON' : 'Audio: OFF';
@@ -489,7 +496,8 @@
             const db = getDatabase();
             const cat = document.getElementById('cat-select').value;
             const size = parseInt(document.getElementById('size-select').value);
-            let pool = getAllWords().filter(i => state.filter === 'both' || i.type === state.filter);
+            let allWords = getAllWords();
+            let pool = allWords.filter(i => state.filter === 'both' || i.type === state.filter);
             if(cat !== 'all') pool = pool.filter(i => i.cat === cat);
 
             if(mode === 'smart') {
@@ -568,21 +576,24 @@
                     const elRepeat = document.getElementById('btn-front-repeat');
                     const elHint = document.getElementById('card-flip-hint');
                     if (settings.listening) {
-                        elJa.classList.add('hidden');
-                        elLIcon.classList.remove('hidden');
-                        elRepeat.classList.remove('hidden');
-                        elHint.innerText = "Listening Mode";
+                        if(elJa) elJa.classList.add('hidden');
+                        if(elLIcon) elLIcon.classList.remove('hidden');
+                        if(elRepeat) elRepeat.classList.remove('hidden');
+                        if(elHint) elHint.innerText = "Listening Mode";
                         speak(word.ja);
                     } else {
-                        elJa.classList.remove('hidden');
-                        elJa.innerText = word.ja;
-                        elLIcon.classList.add('hidden');
-                        elRepeat.classList.add('hidden');
-                        elHint.innerText = "Click to Flip";
+                        if(elJa) { elJa.classList.remove('hidden'); elJa.innerText = word.ja; }
+                        if(elLIcon) elLIcon.classList.add('hidden');
+                        if(elRepeat) elRepeat.classList.add('hidden');
+                        if(elHint) elHint.innerText = "Click to Flip";
                     }
-                    document.getElementById('card-en').innerText = word.en;
-                    document.getElementById('card-ro').innerText = word.ro;
-                    document.getElementById('card-cat-tag').innerText = (word.cat || 'OBJECTS').toUpperCase();
+                    const elEn = document.getElementById('card-en');
+                    const elRo = document.getElementById('card-ro');
+                    const elCat = document.getElementById('card-cat-tag');
+                    if(elEn) elEn.innerText = word.en;
+                    if(elRo) elRo.innerText = word.ro;
+                    if(elCat) elCat.innerText = (word.cat || 'OBJECTS').toUpperCase();
+                    
                     document.getElementById('game-round').innerText = `Word ${state.index + 1} of ${state.currentDeck.length}`;
                     document.getElementById('game-progress').style.width = `${(state.index / state.currentDeck.length) * 100}%`;
                 }
@@ -603,55 +614,40 @@
             changeView('menu');
         }
 
-        // DUPLICATE CLEANER
         function cleanDuplicates() {
             const db = getDatabase();
             const factoryKeys = new Set(FACTORY_DATA.map(w => `${w.ja}_${w.type}`));
             const seenCustom = new Set();
             const toKeep = [];
             let removedCount = 0;
-
             db.custom.forEach(w => {
                 const key = `${w.ja}_${w.type}`;
-                // If it's in factory OR already seen in custom, it's a duplicate
-                if (factoryKeys.has(key) || seenCustom.has(key)) {
-                    removedCount++;
-                } else {
-                    seenCustom.add(key);
-                    toKeep.push(w);
-                }
+                if (factoryKeys.has(key) || seenCustom.has(key)) { removedCount++; } 
+                else { seenCustom.add(key); toKeep.push(w); }
             });
-
             if (removedCount > 0) {
-                if (confirm(`Found ${removedCount} duplicate words (exact matches for Japanese + Script type). Keep only one instance of each?`)) {
+                if (confirm(`Found ${removedCount} duplicate words. Keep only one instance of each?`)) {
                     db.custom = toKeep;
                     saveDatabase(db);
                     renderLibrary();
-                    alert(`Cleanup complete. Removed ${removedCount} duplicates.`);
                 }
-            } else {
-                alert("No duplicate words found in your library.");
-            }
+            } else { alert("No duplicate words found."); }
         }
 
-        // LIBRARY MANAGEMENT
         function renderLibrary() {
             const db = getDatabase();
-            const search = document.getElementById('lib-search').value.toLowerCase();
+            const searchEl = document.getElementById('lib-search');
+            const search = searchEl ? searchEl.value.toLowerCase() : "";
             const allWords = getAllWords();
-            const filtered = allWords.filter(w => w.ja.includes(search) || w.en.toLowerCase().includes(search) || w.ro.toLowerCase().includes(search));
+            const filtered = allWords.filter(w => w.ja.includes(search) || w.en.toLowerCase().includes(search) || (w.ro && w.ro.toLowerCase().includes(search)));
             document.getElementById('lib-count').innerText = `${filtered.length} Words Found`;
             const grid = document.getElementById('lib-grid');
             grid.innerHTML = filtered.map(w => {
                 const m = db.mastery[w.ja] || { lvl: 0, seenCount: 0 };
                 return `<div class="bg-white p-4 rounded-3xl border shadow-sm text-center relative hover:border-emerald-300 transition-all group">
                     <div class="flex justify-between items-center mb-2 px-1">
-                        <button onclick="openEditModal('${w.ja}')" class="text-slate-300 hover:text-indigo-500 p-1 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2(0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
-                        </button>
-                        <button onclick="deleteWord('${w.ja}')" class="text-slate-300 hover:text-rose-500 p-1 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                        </button>
+                        <button onclick="openEditModal('${w.ja}')" class="text-slate-300 hover:text-indigo-500 p-1 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg></button>
+                        <button onclick="deleteWord('${w.ja}')" class="text-slate-300 hover:text-rose-500 p-1 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button>
                     </div>
                     <div onclick="speak('${w.ja}')" class="cursor-pointer active:scale-95 transition-transform">
                         <span class="text-[7px] font-bold text-slate-300 uppercase tracking-widest">${(w.cat || 'OBJECTS').toUpperCase()}</span>
@@ -681,9 +677,9 @@
             state.editingKey = ja;
             document.getElementById('edit-ja').value = word.ja;
             document.getElementById('edit-en').value = word.en;
-            document.getElementById('edit-ro').value = word.ro;
+            document.getElementById('edit-ro').value = word.ro || "";
             document.getElementById('edit-type').value = word.type;
-            document.getElementById('edit-cat').value = word.cat;
+            document.getElementById('edit-cat').value = word.cat || "objects";
             document.getElementById('edit-modal').classList.remove('hidden');
         }
 
@@ -764,7 +760,7 @@
             saveDatabase(db);
         }
 
-        function setFilter(f) { state.filter = f; updateHubStats(); }
+        function setFilter(f) { state.filter = f; updateHubStats(); saveDatabase(getDatabase()); }
         function populateVoices() {
             const select = document.getElementById('voice-select');
             if(!select) return;
@@ -783,8 +779,8 @@
             window.speechSynthesis.speak(u);
         }
         function speakCurrent(e) { if(e) e.stopPropagation(); speak(state.currentDeck[state.index]?.ja); }
-        function toggleAudio() { settings.audio = !settings.audio; saveDatabase(getDatabase()); }
-        function toggleSpeed() { settings.speed = settings.speed === 0.9 ? 0.6 : 0.9; saveDatabase(getDatabase()); }
+        function toggleAudio() { settings.audio = !settings.audio; updateHubStats(); saveDatabase(getDatabase()); }
+        function toggleSpeed() { settings.speed = settings.speed === 0.9 ? 0.6 : 0.9; updateHubStats(); saveDatabase(getDatabase()); }
         function exportJSON() {
             const blob = new Blob([JSON.stringify(getDatabase(), null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
@@ -797,10 +793,7 @@
             reader.onload = function(e) {
                 try {
                     const data = JSON.parse(e.target.result);
-                    if (data.mastery || data.custom) {
-                        saveDatabase(data);
-                        location.reload();
-                    }
+                    if (data.mastery || data.custom) { saveDatabase(data); location.reload(); }
                 } catch (err) { alert("Error reading file."); }
             };
             reader.readAsText(file);
@@ -814,7 +807,7 @@
             const db = getDatabase();
             settings = {...settings, ...db.settings};
             updateHubStats(); 
-            setFilter('h');
+            setFilter(state.filter);
             window.speechSynthesis.onvoiceschanged = populateVoices;
             populateVoices();
         });
